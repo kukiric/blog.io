@@ -2,9 +2,10 @@
   "name": "estag.io",
   "version": "1.0.0",
   "description": "Uma plataforma inovadora para blogs",
+  "main": "server/main.js",
   "scripts": {
-    "dev": "webpack-dev-server",
-    "build": "webpack"
+    "api": "node server/main.js",
+    "dev": "webpack-dev-server --config web/webpack.config.js"
   },
   "author": "Ricardo Maes",
   "license": "MIT",
@@ -14,6 +15,7 @@
   "dependencies": {
     "bootstrap": "^4.0.0",
     "css-loader": "^0.28.10",
+    "express": "^4.16.2",
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.0.6",
     "jquery": "^3.3.1",
