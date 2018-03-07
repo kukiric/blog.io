@@ -1,11 +1,12 @@
 const express = require("express");
 
-const app = express();
+const api = express();
+const config = require("../appconfig.json").api;
 
-app.use(express.static("web/dist"));
+api.use(express.static("web/dist"));
 
-const address = "127.0.0.1";
-const port = 8080;
-app.listen(port, address, () => {
+const address = config.address;
+const port = config.port;
+api.listen(port, address, () => {
     console.log("API iniciada em " + address + ":" + port + "...");
 });

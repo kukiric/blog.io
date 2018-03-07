@@ -1,0 +1,11 @@
+{
+    "api": {
+        "address": "127.0.0.1",
+        "port": 8081,
+        "db": {
+            "username": "",
+            "password": "",
+            "port": 5432
+        }
+    }
+}
