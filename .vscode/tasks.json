@@ -5,7 +5,7 @@
     "tasks": [
         {
             "type": "npm",
-            "script": "dev",
+            "script": "webpack-dev",
             "identifier": "Webpack Dev Server",
             "problemMatcher": [],
             "isBackground": true,

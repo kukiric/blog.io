@@ -1,12 +1,14 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 
-// Gera página html no diretório de saída
-function generatePage(page) {
+// Gera uma página html no diretório de saída
+function generatePage(pageName) {
     return new HtmlWebpackPlugin({
-        template: page,
-        filename: path.basename(page),
-        apiPath: "http://localhost:8081/"
+        template: "html/template.ejs",
+        filename: pageName + ".html",
+        apiPath: "http://localhost:8081/",
+        pageName: pageName,
+        inject: false
     });
 }
 
@@ -16,6 +18,7 @@ module.exports = {
     context: path.resolve(__dirname, "src"),
     entry: {
         assets: "./assets.js",
+        header: "./js/header.js",
         index: "./js/index.js"
     },
     module: {
@@ -23,6 +26,10 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: [ "style-loader", "css-loader" ]
+            },
+            {
+                test: /\.html$/,
+                use: [ "html-loader" ]
             }
         ]
     },
@@ -31,7 +38,7 @@ module.exports = {
         filename: "[name].js"
     },
     plugins: [
-        generatePage("html/index.html")
+        generatePage("index")
     ],
     devServer: {
         contentBase: path.join(__dirname, "public")
