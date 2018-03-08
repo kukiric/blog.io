@@ -31,7 +31,8 @@ create table posts (
 create table comentarios (
     id bigserial primary key,
     id_usuario bigint not null references usuarios(id),
-    id_post bigint not null references posts(id)
+    id_post bigint not null references posts(id),
+    conteudo text not null
 );
 
 -- Conta de administrador
