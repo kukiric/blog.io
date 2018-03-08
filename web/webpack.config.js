@@ -5,7 +5,8 @@ const path = require("path");
 function generatePage(page) {
     return new HtmlWebpackPlugin({
         template: page,
-        filename: path.basename(page)
+        filename: path.basename(page),
+        apiPath: "http://localhost:8081/"
     });
 }
 

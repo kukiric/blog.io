@@ -3,7 +3,10 @@ const config = require("./config.js").api;
 const express = require("express");
 const api = express();
 
-api.use(express.static("web/dist"));
+// Configura as rotas
+api.use("/", require("./routes/home.js"));
+api.use("/", require("./routes/posts.js"));
+api.use("/", require("./routes/login.js"));
 
 // Inicia a aplicação
 const address = config.address;
