@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script async="index.js"></script>
-    <script async="assets.js"></script>
+    <!-- Não exibe a página até os estilos serem carregados -->
+    <style>body { display: none; }</style>
+    <!-- Configura o caminho da API -->
+    <script type="text/javascript">window.apiPath = "<%= htmlWebpackPlugin.options.apiPath %>";</script>
+    <script async src="index.js"></script>
+    <script async src="assets.js"></script>
     <title>Blog.io // Home</title>
 </head>
 <body>

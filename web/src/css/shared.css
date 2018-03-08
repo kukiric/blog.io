@@ -1,0 +1,4 @@
+/* Exibe o documento quando os estilos forem carregados */
+body {
+    display: block;
+}
