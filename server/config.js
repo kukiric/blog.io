@@ -13,7 +13,7 @@ else {
     const defaultConfig =  {
         api: {
             address: "127.0.0.1",
-            port: 8081,
+            port: 8080,
             db: {
                 dbname: "",
                 username: "",

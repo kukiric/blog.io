@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpack = require("webpack");
 const path = require("path");
 
 // Gera uma página html no diretório de saída
@@ -6,7 +7,6 @@ function generatePage(pageName) {
     return new HtmlWebpackPlugin({
         template: "html/template.ejs",
         filename: pageName + ".html",
-        apiPath: "http://localhost:8081/",
         pageName: pageName,
         inject: false
     });
@@ -40,7 +40,5 @@ module.exports = {
     plugins: [
         generatePage("index")
     ],
-    devServer: {
-        contentBase: path.join(__dirname, "public")
-    }
+    devtool: "cheap-source-map"
 };

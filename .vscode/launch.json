@@ -7,8 +7,11 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch API",
-            "program": "${workspaceFolder}/api/main.js"
+            "name": "Launch (Dev)",
+            "program": "${workspaceFolder}/server/main.js",
+            "env": {
+                "NODE_ENV": "development"
+            }
         },
         {
             "name": "Launch in Firefox",

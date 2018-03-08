@@ -9,8 +9,6 @@ function onLogin() {
     let form = $("#login-form").get(0);
     let formData = new FormData(form);
     Cookies.set("name", formData.get("name"));
-    location.reload(true);
-    return false;
 }
 
 function onLogout() {
