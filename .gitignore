@@ -1,2 +1,5 @@
 node_modules/
 web/dist/
+
+# Arquivo de configuração do projeto com senhas
+appconfig.json

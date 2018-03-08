@@ -1,10 +1,11 @@
-const express = require("express");
+const config = require("./config.js").api;
 
+const express = require("express");
 const api = express();
-const config = require("../appconfig.json").api;
 
 api.use(express.static("web/dist"));
 
+// Inicia a aplicação
 const address = config.address;
 const port = config.port;
 api.listen(port, address, () => {
