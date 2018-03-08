@@ -6,4 +6,9 @@ router.post("/login", (req, res) => {
     res.end();
 });
 
+router.delete("/login", (req, res) => {
+    console.log("DELETE /login");
+    res.end();
+});
+
 module.exports = router;

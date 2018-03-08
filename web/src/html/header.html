@@ -7,9 +7,9 @@
             <a class="nav-item nav-link" data-page="posts" href="/posts">Posts</a>
         </div>
         <!-- Widget de login -->
-        <form class="nav-item form-inline no-display" id="login-form">
-            <input class="form-control mx-1" id="login-user" type="text" placeholder="Usuário">
-            <input class="form-control mx-1" id="login-passwd" type="password" placeholder="Senha">
+        <form class="nav-item form-inline no-display" id="login-form" action="/api/login" method="POST">
+            <input class="form-control mx-1" name="name" type="text" required placeholder="Usuário">
+            <input class="form-control mx-1" name="passwd" type="password" required placeholder="Senha">
             <button class="btn btn-primary ml-1" id="login-btn">Entrar</button>
         </form>
         <!-- Widget do usuário logado -->
