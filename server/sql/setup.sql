@@ -25,7 +25,8 @@ create table posts (
     id bigserial primary key,
     titulo varchar(255) not null,
     conteudo text not null,
-    id_usuario bigint not null references usuarios(id)
+    id_usuario bigint not null references usuarios(id),
+    data_postagem date not null
 );
 
 create table comentarios (
