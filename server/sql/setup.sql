@@ -1,58 +1,58 @@
 -- Reseta o banco de dados para o estado inicial
-drop table if exists comentarios;
+drop table if exists comments;
 drop table if exists posts;
-drop table if exists usuarios;
-drop type if exists tipo_usuario;
+drop table if exists users;
+drop type if exists user_type_enum;
 
--- Tipo de usuário
+-- user_type de usuário
 -- Nota: enum estática, não-extensível
-create type tipo_usuario as enum (
+create type user_type_enum as enum (
     'visitante',
     'contribuidor',
     'admin'
 );
 
 -- Tabelas
-create table usuarios (
+create table users (
     id bigserial primary key,
-    nomeLogin varchar(255) unique not null,
-    nomeDisplay varchar(255) not null,
-    senha varchar(255) not null,
-    tipo tipo_usuario not null
+    login_name varchar(255) unique not null,
+    display_name varchar(255) not null,
+    passwd varchar(255) not null,
+    user_type user_type_enum not null
 );
 
 create table posts (
     id bigserial primary key,
-    titulo varchar(255) not null,
-    conteudo text not null,
-    id_usuario bigint not null references usuarios(id),
-    data_postagem date not null
+    title varchar(255) not null,
+    content text not null,
+    id_user bigint not null references users(id),
+    post_date date not null
 );
 
-create table comentarios (
+create table comments (
     id bigserial primary key,
-    id_usuario bigint not null references usuarios(id),
+    id_user bigint not null references users(id),
     id_post bigint not null references posts(id),
-    conteudo text not null
+    content text not null
 );
 
 -- Conta de administrador
-insert into usuarios (
-    nomeLogin, nomeDisplay, senha, tipo
+insert into users (
+    login_name, display_name, passwd, user_type
 ) values (
     'admin', 'Administrador', 'admin', 'admin'
 );
 
 -- Conta de contribuidor
-insert into usuarios (
-    nomeLogin, nomeDisplay, senha, tipo
+insert into users (
+    login_name, display_name, passwd, user_type
 ) values (
-    'ricardo', 'Ricardo Maes', 'senha', 'contribuidor'
+    'ricardo', 'Ricardo Maes', 'passwd', 'contribuidor'
 );
 
 -- Conta de visitante
-insert into usuarios (
-    nomeLogin, nomeDisplay, senha, tipo
+insert into users (
+    login_name, display_name, passwd, user_type
 ) values (
-    'visitante', 'Comentador Chato', 'senha', 'visitante'
+    'visitante', 'Comentador Chato', 'passwd', 'visitante'
 );
