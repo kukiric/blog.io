@@ -23,6 +23,9 @@ if (process.env.NODE_ENV === "development") {
     const compiler = webpack(webpackConfig);
     app.use(devMiddleware(compiler));
 }
+else {
+    app.use(express.static("web/dist"));
+}
 
 // Inicia a aplicação
 const address = config.address;

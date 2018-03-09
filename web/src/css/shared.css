@@ -6,3 +6,21 @@ body {
 .no-display {
     display: none;
 }
+
+/* Campo sem destaque até ser selecionado */
+.form-faded > input {
+    background-color: transparent;
+    transition: 200ms;
+}
+
+.form-faded:focus-within > input {
+    background-color: white;
+    transition: 200ms;
+}
+
+/* Estiliza um botão como link */
+.fake-button-link {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
