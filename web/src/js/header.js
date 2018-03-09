@@ -1,32 +1,36 @@
+import QueryParser from "./queryparser.js";
 import $ from "jquery";
 import Cookies from "js-cookie";
+import "popper.js";
+import "bootstrap";
 
 window.$user = {
-    name: Cookies.get("name")
+    name: Cookies.get("username"),
+    token: Cookies.get("auth-token")
 };
 
-function onLogin() {
-    let form = $("#login-form").get(0);
-    let formData = new FormData(form);
-    Cookies.set("name", formData.get("name"));
-}
-
-function onLogout() {
-    Cookies.remove("name");
-    location.reload(true);
-}
-
 $(document).ready(() => {
-    // Exibe o usuário logado se ele existir
+    let loginForm = $("#login-form");
+    // Exibe o nome do usuário logado se ele existir
     if (window.$user.name) {
         $("#user-widget").removeClass("no-display");
         $("#user-name").text(window.$user.name);
     }
     else {
-        $("#login-form").removeClass("no-display");
+        loginForm.removeClass("no-display");
     }
-    // Evento de login
-    $("#login-form").on("submit", onLogin);
-    // Evento de logout
-    $("#logout-btn").on("click", onLogout);
+    // Exibe mensagem de erro se necessário
+    let queryParser = new QueryParser(window);
+    let pageError = queryParser.getQueryParam("err");
+    if (pageError != undefined) {
+        loginForm.popover({
+            content: pageError,
+            placement: "bottom"
+        });
+        loginForm.delay(200).popover("show").on("focus", self => self.popover("hide"));
+        // Remove o parâmetro para não continuar na próxima página
+        history.replaceState({}, document.title, queryParser.getURIWithoutQueryParam("err"));
+    }
+    // Configura o endereço de retorno do login
+    loginForm.attr("action", "/login?return=" + encodeURIComponent(location.href));
 });

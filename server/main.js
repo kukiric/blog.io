@@ -1,20 +1,22 @@
 const config = require("./config.js").api;
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 const express = require("express");
 let app = express();
 
-// Configura as rotas da API
-// app.use("/", require("./routes/home.js"));
-app.use("/", require("./routes/posts.js"));
-app.use("/", require("./routes/login.js"));
+// Configura os middlewares do express
+app.use(bodyParser());
+app.use(cookieParser());
 
-// Configura as rotas do servidor
-app.post("/login", (req, res) => {
-    res.redirect("/");
-});
+// Configura as rotas da API
+app.use("/api", require("./routes/api/posts.js"));
+
+// Configura as rotas base
+app.use("/", require("./routes/login.js"));
 
 // Adiciona o webpack com auto compilação em modo de desenvolvimento
 if (process.env.NODE_ENV === "development") {
-    console.info("Ligando webpack-dev-middleware...");
+    console.info("[INFO]: Ligando webpack-dev-middleware...");
     const webpack = require("webpack");
     const devMiddleware = require("webpack-dev-middleware");
     const webpackConfig = require("../web/webpack.config.js");
@@ -26,5 +28,5 @@ if (process.env.NODE_ENV === "development") {
 const address = config.address;
 const port = config.port;
 app.listen(port, address, () => {
-    console.log("Servidor iniciado em " + address + ":" + port);
+    console.log("[INFO]: Servidor iniciado em " + address + ":" + port);
 });

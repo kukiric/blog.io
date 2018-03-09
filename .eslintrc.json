@@ -9,9 +9,9 @@
         "sourceType": "module"
     },
     "rules": {
-        "no-const-assign": "warn",
-        "no-this-before-super": "warn",
-        "no-undef": "warn",
+        "no-const-assign": "error",
+        "no-this-before-super": "error",
+        "no-undef": "error",
         "no-unreachable": "warn",
         "no-unused-vars": "warn",
         "constructor-super": "warn",

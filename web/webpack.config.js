@@ -3,11 +3,12 @@ const webpack = require("webpack");
 const path = require("path");
 
 // Gera uma página html no diretório de saída
-function generatePage(pageName) {
+function generatePage(pageName, title) {
     return new HtmlWebpackPlugin({
         template: "html/template.ejs",
         filename: pageName + ".html",
         pageName: pageName,
+        title: title,
         inject: false
     });
 }
@@ -38,7 +39,7 @@ module.exports = {
         filename: "[name].js"
     },
     plugins: [
-        generatePage("index")
+        generatePage("index", "Home")
     ],
     devtool: "cheap-source-map"
 };
