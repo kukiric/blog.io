@@ -1,3 +1,4 @@
+import "./header.js";
 import $ from "jquery";
 import "bootstrap";
 

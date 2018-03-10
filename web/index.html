@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="shared.css">
     <!-- Scripts -->
     <script defer src="vendor.js"></script>
-    <script defer src="header.js"></script>
+    <!-- <script defer src="header.js"></script> -->
     <script defer src="index.js"></script>
 </head>
 <body>
@@ -25,10 +25,10 @@
                 <a class="nav-item nav-link" data-page="posts" href="/posts">Posts</a>
             </div>
             <!-- Botão de opções extras na área de navegação para mobile -->
-            <button class="navbar-toggler order-2" type="button" data-toggle="collapse" data-target="#navCollapse">
+            <button class="navbar-toggler order-2" type="button" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="navbar-collapse collapse order-3" id="navCollapse">
+            <div class="navbar-collapse collapse order-3">
                 <!-- Widget de login -->
                 <form class="nav-item form-inline flex-nowrap d-none form-faded" id="login-form" action="/login" method="POST">
                     <input class="form-control mx-1" name="name" type="text" required placeholder="Usuário">

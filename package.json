@@ -4,14 +4,14 @@
   "description": "Uma plataforma inovadora para blogs",
   "main": "server/main.js",
   "scripts": {
-    "run": "node server/main.js",
+    "server": "node server/main.js",
     "dev": "NODE_ENV=development node server/main.js",
     "build": "webpack --config web/webpack.config.js"
   },
   "author": "Ricardo Maes",
   "license": "MIT",
   "devDependencies": {
-    "webpack": "^4.1.0",
+    "webpack": "^4.1.1",
     "webpack-cli": "^2.0.10",
     "webpack-dev-middleware": "^3.0.1"
   },
