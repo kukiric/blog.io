@@ -1,8 +1,8 @@
 import QueryParser from "./queryparser.js";
-import $ from "jquery";
 import Cookies from "js-cookie";
-import "popper.js";
+import $ from "jquery";
 import "bootstrap";
+import "popper.js";
 
 window.$user = {
     name: Cookies.get("username"),

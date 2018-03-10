@@ -1,45 +1,23 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpack = require("webpack");
 const path = require("path");
 
-// Gera uma página html no diretório de saída
-function generatePage(pageName, title) {
-    return new HtmlWebpackPlugin({
-        template: "html/template.ejs",
-        filename: pageName + ".html",
-        pageName: pageName,
-        title: title,
-        inject: false
-    });
-}
-
 // Configuração do webpack
 module.exports = {
-    mode: "development",
+    mode: process.env.NODE_ENV || "production",
+    devtool: process.env.NODE_ENV === "development" ? "source-map" : "none",
     context: path.resolve(__dirname, "src"),
     entry: {
-        assets: "./assets.js",
-        header: "./js/header.js",
-        index: "./js/index.js"
+        header: "./header.js",
+        index: "./index.js"
     },
-    module: {
-        rules: [
-            {
-                test: /\.css$/,
-                use: [ "style-loader", "css-loader" ]
-            },
-            {
-                test: /\.html$/,
-                use: [ "html-loader" ]
-            }
-        ]
+    optimization: {
+        splitChunks: {
+            chunks: "all",
+            name: "vendor"
+        }
     },
     output: {
-        path: path.resolve(__dirname, "dist"),
+        path: path.resolve(__dirname, "./js"),
         filename: "[name].js"
-    },
-    plugins: [
-        generatePage("index", "Home")
-    ],
-    devtool: "cheap-source-map"
+    }
 };

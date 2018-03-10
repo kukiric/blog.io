@@ -4,7 +4,7 @@ drop table if exists posts;
 drop table if exists users;
 drop type if exists user_type_enum;
 
--- user_type de usuário
+-- Tipo de usuário
 -- Nota: enum estática, não-extensível
 create type user_type_enum as enum (
     'visitante',

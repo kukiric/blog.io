@@ -1,8 +1,4 @@
-/* Exibe o documento quando os estilos forem carregados */
-body {
-    display: block;
-}
-
+/* Elemento oculto */
 .no-display {
     display: none;
 }

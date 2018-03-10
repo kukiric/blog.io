@@ -1,5 +1,8 @@
+# Dependências instaladas pelo npm/yarn
 node_modules/
-web/dist/
+
+# Arquivos de javascript compilados pelo webpack
+web/js/
 
 # Arquivo de configuração do projeto com senhas
 appconfig.json

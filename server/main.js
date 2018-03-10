@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const express = require("express");
 const pgPromise = require("pg-promise")();
+const path = require("path");
 
 let app = express();
 let db = pgPromise({
@@ -13,8 +14,16 @@ let db = pgPromise({
     password: config.db.password
 });
 
+// Configura as rotas estáticas
+app.use(express.static("node_modules/jquery/dist"));
+app.use(express.static("node_modules/bootstrap/dist/js"));
+app.use(express.static("node_modules/bootstrap/dist/css"));
+app.use(express.static("web/css"));
+app.use(express.static("web/js"));
+app.get("/", (req, res) => res.sendFile(path.resolve("web/index.html")));
+
 // Configura os middlewares do express
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
@@ -45,9 +54,6 @@ db.connect().then(() => {
             const webpackConfig = require("../web/webpack.config.js");
             const compiler = webpack(webpackConfig);
             app.use(devMiddleware(compiler));
-        }
-        else {
-            app.use(express.static("web/dist"));
         }
     });
 }).catch(err => {
