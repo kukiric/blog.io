@@ -1,17 +1,28 @@
-/* Elemento oculto */
-.no-display {
-    display: none;
+.navbar-brand {
+    font-family: "Pacifico";
 }
 
 /* Campo sem destaque até ser selecionado */
+.form-faded {
+    transition: 200ms;
+}
+
 .form-faded > input {
     background-color: transparent;
-    transition: 200ms;
+    transition: inherit;
+}
+
+.form-faded > button {
+    transition: inherit;
 }
 
 .form-faded:focus-within > input {
     background-color: white;
-    transition: 200ms;
+}
+
+.form-faded:focus-within > button {
+    background-color: #007bff;
+    border-color: #007bff;
 }
 
 /* Estiliza um botão como link */
@@ -19,4 +30,15 @@
     background: none;
     border: none;
     cursor: pointer;
+}
+
+/* Estilos para dispositivos mobile */
+@media (max-width: 1199.98px) {
+    .form-inline.flex-nowrap {
+        flex-wrap: wrap !important;
+    }
+
+    .form-inline.flex-nowrap > * {
+        margin: 0.2em;
+    }
 }

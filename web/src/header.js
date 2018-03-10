@@ -18,11 +18,11 @@ $(document).ready(() => {
     let logoutForm = $("#logout-form");
     // Exibe o nome do usuário logado se ele existir
     if (window.$user.name) {
-        $("#user-widget").removeClass("no-display");
+        $("#user-widget").removeClass("d-none");
         $("#user-name").text(window.$user.name);
     }
     else {
-        loginForm.removeClass("no-display");
+        loginForm.removeClass("d-none");
     }
     // Exibe mensagem de erro se necessário
     let queryParser = new QueryParser(window);
