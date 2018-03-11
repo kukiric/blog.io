@@ -5,7 +5,7 @@
   "main": "server/main.js",
   "scripts": {
     "server": "node server/main.js",
-    "dev": "NODE_ENV=development node server/main.js",
+    "dev": "cross-env NODE_ENV=development node server/main.js",
     "build": "webpack --config web/webpack.config.js"
   },
   "author": "Ricardo Maes",
@@ -19,6 +19,7 @@
     "body-parser": "^1.18.2",
     "bootstrap": "^4.0.0",
     "cookie-parser": "^1.4.3",
+    "cross-env": "^5.1.4",
     "express": "^4.16.2",
     "jquery": "^3.3.1",
     "js-cookie": "^2.2.0",
