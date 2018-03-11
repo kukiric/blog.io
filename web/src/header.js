@@ -20,6 +20,7 @@ $(document).ready(() => {
     if (window.$user.name) {
         $("#user-widget").removeClass("d-none");
         $("#user-name").text(window.$user.name);
+        $("#navbar-toggler").addClass("d-none");
     }
     else {
         loginForm.removeClass("d-none");

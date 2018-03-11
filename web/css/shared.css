@@ -32,10 +32,27 @@
     cursor: pointer;
 }
 
-/* Estilos para dispositivos mobile */
-@media (max-width: 1199.98px) {
+/* Estilos para dispositivos móveis (tablets, smartphones) */
+@media (max-width: 991.98px) {
+    .navbar-nav > .nav-link, .navbar-text {
+        padding: 8px;
+        margin: 0 !important;
+    }
+
+    .navbar-nav > .navbar-text {
+        padding: 8px 4px;
+    }
+
+    #user-name {
+        padding-right: 0 !important;
+    }
+
+    .form-inline > .form-control {
+        width: 100%;
+    }
+
     .form-inline.flex-nowrap {
-        flex-wrap: wrap !important;
+        flex-direction: column;
     }
 
     .form-inline.flex-nowrap > * {
