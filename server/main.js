@@ -4,6 +4,8 @@ const cookieParser = require("cookie-parser");
 const express = require("express");
 const expressHandlebars = require("express-handlebars");
 const sequelize = require("sequelize");
+const showdown = require("showdown");
+const moment = require("moment");
 const path = require("path");
 
 let app = express();
@@ -12,7 +14,11 @@ let db = new sequelize(config.db.dbname, config.db.username, config.db.password,
     host: config.db.host,
     port: config.db.port,
     returning: true,
-    // logging: false
+    logging: false
+});
+
+let mdConverter = new showdown.Converter({
+    noHeaderId: true
 });
 
 // Liga o handlebars no servidor
@@ -20,7 +26,18 @@ app.engine("hbs", expressHandlebars({
     defaultLayout: "default",
     layoutsDir: "web/views/layouts",
     partialsDir: "web/views/partials",
-    extname: "hbs"
+    extname: "hbs",
+    compilerOptions: {
+        preventIdent: true
+    },
+    helpers: {
+        dateTime: date => {
+            return moment(date).locale("pt-br").format("L");
+        },
+        markdown: text => {
+            return mdConverter.makeHtml(text);
+        }
+    }
 }));
 app.set("views", path.resolve("./web/views"));
 app.set("view engine", "hbs");
@@ -53,7 +70,7 @@ db.authenticate().then(async () => {
     });
 
     // Configura as rotas da API
-    app.use("/api", require("./routes/api/posts.js"));
+    app.use("/api", require("./routes/api/posts.js").router);
 
     // Configura as rotas base
     app.use("/", require("./routes/login.js"));

@@ -1,1 +1,7 @@
-{{> post title="Olá mundo!" content="Texto do post" }}
+<br><br>
+<h1>Posts recentes:</h1>
+{{#each posts}}
+    <hr>
+    {{> post}}
+{{/each}}
+<hr>

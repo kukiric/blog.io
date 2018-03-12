@@ -10,7 +10,10 @@ async function getSinglePost(e, id) {
             include: [
                 { model: e.User, as: "creator", attributes: [ "fullName" ] },
                 { model: e.Comment, attributes: [ "creator", "content", "createdAt" ] }
-            ]
+            ],
+            where: {
+                id: id
+            }
         });
         // Remove o id do usuário antes de retornar
         result.creatorId = undefined;
@@ -22,7 +25,7 @@ async function getSinglePost(e, id) {
     }
 };
 
-async function getAllPostsPaged(e, page) {
+async function getMostRecentPaged(e, page) {
     try {
         const results = await e.Post.findAll({
             limit: ITEMS_PER_PAGE,
@@ -31,6 +34,9 @@ async function getAllPostsPaged(e, page) {
             include: [
                 { model: e.User, as: "creator", attributes: [ "fullName" ] },
                 { model: e.Comment, attributes: [ "creator", "content", "createdAt" ] }
+            ],
+            order: [
+                [ "createdAt", "desc" ]
             ]
         });
         // Remove o id do usuário antes de retornar
@@ -42,18 +48,16 @@ async function getAllPostsPaged(e, page) {
     }
 };
 
-// Retorna até 10 posts de acordo com a página requerida
+// Retorna até 10 posts mais recentes por página
 router.get("/posts", async (req, res) => {
-    console.info("[INFO]: GET /posts");
     let page = req.query.p || 0;
     let entities = res.locals.entities;
-    let posts = await getAllPostsPaged(entities, page);
-    res.send("<pre>" + JSON.stringify(posts, undefined, 4) + "</pre>");
+    let posts = await getMostRecentPaged(entities, page);
+    res.send(JSON.stringify(posts));
 });
 
 // Envia um novo post
 router.post("/posts", async (req, res) => {
-    console.info("[INFO]: POST /posts");
     res.end();
 });
 
@@ -63,25 +67,26 @@ router.get("/posts/:id", async (req, res) => {
     console.info("[INFO]: GET /posts/" + id);
     let entities = res.locals.entities;
     let post = await getSinglePost(entities, id);
-    res.send("<pre>" + JSON.stringify(post, undefined, 4) + "</pre>");
+    res.send(JSON.stringify(post));
 });
 
 // Atualiza um post
 router.put("/posts/:id", async (req, res) => {
-    console.info("[INFO]: PUT /posts/" + req.params.id);
     res.end();
 });
 
 // TODO: Envia a imagem de um post
 // router.put("/posts/:id/image", async (req, res) => {
-//     console.info("[INFO]: PUT /posts/" + req.params.id + "/image");
 //     res.end();
 // });
 
 // Remove um post
 router.delete("/posts/:id", async (req, res) => {
-    console.info("[INFO]: DELETE /posts/" + req.params.id);
     res.end();
 });
 
-module.exports = router;
+module.exports = {
+    getSinglePost: getSinglePost,
+    getAllPostsPaged: getMostRecentPaged,
+    router: router
+};

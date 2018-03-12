@@ -1,4 +1,8 @@
 <div class="post">
-    <h1>{{ title }}</h1>
-    <p>{{ content }}</p>
+    <h2>{{ title }}</h2>
+    <span class="h5">Publicado por: {{ creator.fullName }}</span>
+    <br>
+    <span>Postado em: {{ dateTime createdAt }}</span>
+    <br><br>
+    <div>{{{ markdown content }}}</div>
 </div>

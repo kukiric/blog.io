@@ -40,7 +40,6 @@ router.post("/login", async (req, res) => {
     let password = req.body.passwd || "";
     let returnAddr = req.query.returnTo || "/";
     let entities = res.locals.entities;
-    console.info("[INFO]: POST /login");
     console.info("[INFO]: Tentativa de login: " + username);
     let user = await findUser(entities, username);
     if (user && await checkPassword(entities, user, password)) {
