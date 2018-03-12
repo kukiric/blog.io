@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser");
 const express = require("express");
 const expressHandlebars = require("express-handlebars");
 const sequelize = require("sequelize");
-const showdown = require("showdown");
+const markdown = require("markdown").markdown;
 const moment = require("moment");
 const path = require("path");
 
@@ -15,10 +15,6 @@ let db = new sequelize(config.db.dbname, config.db.username, config.db.password,
     port: config.db.port,
     returning: true,
     logging: false
-});
-
-let mdConverter = new showdown.Converter({
-    noHeaderId: true
 });
 
 // Liga o handlebars no servidor
@@ -35,7 +31,7 @@ app.engine("hbs", expressHandlebars({
             return moment(date).locale("pt-br").format("L");
         },
         markdown: text => {
-            return mdConverter.makeHtml(text);
+            return markdown.toHTML(text);
         },
         insertEquals: (text, a, b) => {
             return a == b ? text : "";
