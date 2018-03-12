@@ -4,13 +4,12 @@ const router = express.Router();
 // Busca o usuário no banco de dados
 async function findUser(e, name) {
     try {
-        const match = await e.User.findAndCountAll({
+        const match = await e.User.findOne({
             where: {
                 username: name
-            },
-            limit: 1
+            }
         });
-        return match.rows[0];
+        return match;
     }
     catch(err) {
         console.error(err.stack);
@@ -21,14 +20,13 @@ async function findUser(e, name) {
 // Verifica se a senha do usuário está correta
 async function checkPassword(e, user, passwd) {
     try {
-        const match = await e.User.findAndCountAll({
+        const match = await e.User.findOne({
             where: {
                 username: user.username,
                 passwd: passwd
-            },
-            limit: 1
+            }
         });
-        return match.rows[0] != null;
+        return match != null;
     }
     catch(err) {
         console.error(err.stack);

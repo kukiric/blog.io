@@ -25,36 +25,43 @@ module.exports = {
         }),
 
         this.Comment = db.define("comment", {
+            creator: { type: seq.STRING, allowNull: false },
             content: { type: seq.TEXT, allowNull: false }
         }),
 
         // Define as relações
-        this.Post.belongsTo(this.User);
-        this.Comment.belongsTo(this.User);
-        this.Post.hasMany(this.Comment);
+        this.Post.belongsTo(this.User, { as: "creator", foreignKey: { allowNull: false } });
+        this.Post.hasMany(this.Comment, { foreignKey: { allowNull: false } });
 
         // Sincroniza o modelo com o banco
-        await db.sync({
-            force: true
-        });
+        await db.sync();
     },
 
     seed: async function() {
+        // Sempre retorna o valor no upsert
+        const opts = { returning: true };
+
         // Cria o usuário administrador padrão
-        await this.User.findOrCreate({
-            where: {
-                username: "admin"
-            },
-            defaults: {
-                fullName: "Ricardo Maes",
-                passwd: "admin"
-            }
-        });
+        const user = await this.User.upsert({
+            username: "admin",
+            fullName: "Ricardo Maes",
+            passwd: "admin"
+        }, opts);
 
         // Cria o primeiro post do blog
-        await this.Post.create({
+        const post = await this.Post.upsert({
+            id: 1,
             title: "Bem vindo ao Blog.io!",
-            content: require("./lipsum.js")
-        });
+            content: require("./lipsum.js"),
+            creatorId: user[0].id
+        }, opts);
+
+        // Cria o primeiro comentário do blog
+        const comment = await this.Comment.upsert({
+            id: 1,
+            creator: "Comentador",
+            content: "Primeiro comentário!",
+            postId: post[0].id
+        }, opts);
     }
 };
