@@ -2,6 +2,7 @@ const config = require("./config.js").app;
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const express = require("express");
+const expressHandlebars = require("express-handlebars");
 const pgPromise = require("pg-promise")();
 const path = require("path");
 
@@ -14,13 +15,22 @@ let db = pgPromise({
     password: config.db.password
 });
 
+// Liga o handlebars no servidor
+app.engine("hbs", expressHandlebars({
+    defaultLayout: "default",
+    layoutsDir: "web/views/layouts",
+    partialsDir: "web/views/partials",
+    extname: "hbs"
+}));
+app.set("views", path.resolve("./web/views"));
+app.set("view engine", "hbs");
+
 // Configura as rotas estáticas
 app.use(express.static("node_modules/jquery/dist"));
 app.use(express.static("node_modules/bootstrap/dist/js"));
 app.use(express.static("node_modules/bootstrap/dist/css"));
 app.use(express.static("web/css"));
 app.use(express.static("web/js"));
-app.get("/", (req, res) => res.sendFile(path.resolve("web/index.html")));
 
 // Configura os middlewares do express
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -38,6 +48,7 @@ app.use("/api", require("./routes/api/posts.js"));
 
 // Configura as rotas base
 app.use("/", require("./routes/login.js"));
+app.use("/", require("./routes/index.js"));
 
 // Conecta no banco de dados
 console.info("[INFO]: Tentando conectar na base de dados \"" + config.db.dbname + "\" em " + config.db.address + ":" + config.db.port);

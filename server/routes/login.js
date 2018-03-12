@@ -24,6 +24,7 @@ async function checkPassword(db, user, passwd) {
     }
 }
 
+// Autentica o usuário
 router.post("/login", async (req, res) => {
     let username = req.body.name || "";
     let password = req.body.passwd || "";
@@ -45,6 +46,7 @@ router.post("/login", async (req, res) => {
     res.redirect(returnAddr);
 });
 
+// Cancela a autenticação do usuário
 router.post("/logout", (req, res) => {
     let returnAddr = req.query.return || "/";
     res.clearCookie("username");
