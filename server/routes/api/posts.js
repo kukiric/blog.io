@@ -53,6 +53,7 @@ router.get("/posts", async (req, res) => {
     let page = req.query.p || 0;
     let entities = res.locals.entities;
     let posts = await getMostRecentPaged(entities, page);
+    res.contentType("json");
     res.send(JSON.stringify(posts));
 });
 
@@ -67,6 +68,7 @@ router.get("/posts/:id", async (req, res) => {
     console.info("[INFO]: GET /posts/" + id);
     let entities = res.locals.entities;
     let post = await getSinglePost(entities, id);
+    res.contentType("json");
     res.send(JSON.stringify(post));
 });
 

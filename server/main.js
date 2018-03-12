@@ -36,6 +36,9 @@ app.engine("hbs", expressHandlebars({
         },
         markdown: text => {
             return mdConverter.makeHtml(text);
+        },
+        insertEquals: (text, a, b) => {
+            return a == b ? text : "";
         }
     }
 }));

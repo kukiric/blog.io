@@ -1,6 +1,6 @@
 const express = require("express");
-const router = express.Router();
 const posts = require("./api/posts");
+const router = express.Router();
 
 router.get("/", async (req, res) => {
     // Preenche o objeto de posts do cliente com os 10 posts mais recentes

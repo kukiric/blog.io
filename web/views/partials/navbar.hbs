@@ -3,8 +3,8 @@
         <a class="navbar-brand" href="/">Blog.io</a>
         <!-- Ítens da navegação -->
         <div class="navbar-nav flex-row mr-auto">
-            <a class="nav-item nav-link active" data-page="index" href="/">Home</a>
-            <a class="nav-item nav-link" data-page="posts" href="/posts">Posts</a>
+            <a class="nav-item nav-link {{ insertEquals "active" pageName "Home" }}" data-page="index" href="/">Home</a>
+            <a class="nav-item nav-link {{ insertEquals "active" pageName "Posts" }}" data-page="posts" href="/api/posts?pretty=1">Posts</a>
         </div>
         <!-- Botão de opções extras na área de navegação para mobile -->
         <button class="navbar-toggler" id="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse">
