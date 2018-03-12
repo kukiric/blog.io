@@ -2,24 +2,36 @@ const express = require("express");
 const router = express.Router();
 
 // Busca o usuário no banco de dados
-async function findUser(db, name) {
+async function findUser(e, name) {
     try {
-        return await db.one("select * from users where login_name = $1", name);
+        const match = await e.User.findAndCountAll({
+            where: {
+                username: name
+            },
+            limit: 1
+        });
+        return match.rows[0];
     }
     catch(err) {
-        console.warn("[WARN]: " + err);
+        console.error(err.stack);
         return null;
     }
 }
 
 // Verifica se a senha do usuário está correta
-async function checkPassword(db, user, passwd) {
+async function checkPassword(e, user, passwd) {
     try {
-        let match = await db.oneOrNone("select * from users where login_name = $1 and passwd = $2", [user.login_name, passwd]);
-        return match.login_name === user.login_name;
+        const match = await e.User.findAndCountAll({
+            where: {
+                username: user.username,
+                passwd: passwd
+            },
+            limit: 1
+        });
+        return match.rows[0] != null;
     }
     catch(err) {
-        console.warn("[WARN]: " + err);
+        console.error(err.stack);
         return null;
     }
 }
@@ -29,12 +41,12 @@ router.post("/login", async (req, res) => {
     let username = req.body.name || "";
     let password = req.body.passwd || "";
     let returnAddr = req.query.returnTo || "/";
-    let db = res.locals.db;
+    let entities = res.locals.entities;
     console.info("[INFO]: POST /login");
     console.info("[INFO]: Tentativa de login: " + username);
-    let user = await findUser(db, username);
-    if (user && await checkPassword(db, user, password)) {
-        res.cookie("username", user.display_name);
+    let user = await findUser(entities, username);
+    if (user && await checkPassword(entities, user, password)) {
+        res.cookie("username", user.fullName);
         res.cookie("auth-token", "0");
         console.info("[INFO]: Usuário logado com sucesso");
     }
@@ -43,7 +55,7 @@ router.post("/login", async (req, res) => {
         // Envia mensagem de erro de volta ao cliente junto ao endereço
         returnAddr += "?err=login";
     }
-    res.render(returnAddr);
+    res.redirect(returnAddr);
 });
 
 // Cancela a autenticação do usuário

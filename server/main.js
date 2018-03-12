@@ -10,7 +10,8 @@ let app = express();
 let db = new sequelize(config.db.dbname, config.db.username, config.db.password, {
     dialect: "postgres",
     host: config.db.host,
-    port: config.db.port
+    port: config.db.port,
+    logging: false
 });
 
 // Liga o handlebars no servidor
@@ -35,32 +36,28 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-// Injeta uma referência ao objeto do banco de dados na aplicação
-app.use((req, res, next) => {
-    res.locals.db = db;
-    next();
-});
-
-// Configura as rotas da API
-app.use("/api", require("./routes/api/posts.js"));
-
-// Configura as rotas base
-app.use("/", require("./routes/login.js"));
-app.use("/", require("./routes/home.js"));
-
 // Conecta no banco de dados
 console.info("[INFO]: Tentando conectar na base de dados \"" + config.db.dbname + "\" em " + config.db.address + ":" + config.db.port);
 db.authenticate().then(async () => {
     console.info("[INFO]: Conexão ao banco bem-sucedida!");
     // Inicializa os valores-padrão no banco de dados
-    const entities = require("./entities")(db);
-    await entities.sync();
+    const entities = require("./entities");
+    await entities.sync(db);
     await entities.seed();
-    // Insere uma referência às entidades do banco na aplicação
+    // Injeta referências às entidades e ao banco na aplicação
     app.use((req, res, next) => {
+        res.locals.db = db;
         res.locals.entities = require("./entities");
         next();
     });
+
+    // Configura as rotas da API
+    app.use("/api", require("./routes/api/posts.js"));
+
+    // Configura as rotas base
+    app.use("/", require("./routes/login.js"));
+    app.use("/", require("./routes/home.js"));
+
     // Inicia a aplicação
     app.listen(config.port, config.address, () => {
         console.info("[INFO]: Servidor iniciado em " + config.address + ":" + config.port);

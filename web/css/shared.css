@@ -12,6 +12,10 @@
     transition: inherit;
 }
 
+.form-faded > input::placeholder {
+    color: gray;
+}
+
 .form-faded > button {
     transition: inherit;
 }

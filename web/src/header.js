@@ -33,7 +33,8 @@ $(document).ready(() => {
             content: errors[errorType],
             placement: "bottom"
         });
-        loginForm.delay(200).popover("show").on("focus", self => self.popover("hide"));
+        loginForm.delay(200).popover("show");
+        $("#login-form > input").on("focus", () => loginForm.popover("dispose"));
         // Remove o parâmetro para não continuar na próxima página
         history.replaceState({}, document.title, queryParser.getURIWithoutQueryParam("err"));
     }
