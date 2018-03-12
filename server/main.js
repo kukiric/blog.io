@@ -11,7 +11,7 @@ const path = require("path");
 let app = express();
 let db = new sequelize(config.db.dbname, config.db.username, config.db.password, {
     dialect: "postgres",
-    host: config.db.host,
+    host: config.db.address,
     port: config.db.port,
     returning: true,
     logging: false
