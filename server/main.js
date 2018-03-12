@@ -3,16 +3,14 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const express = require("express");
 const expressHandlebars = require("express-handlebars");
-const pgPromise = require("pg-promise")();
+const sequelize = require("sequelize");
 const path = require("path");
 
 let app = express();
-let db = pgPromise({
-    host: config.db.address,
-    port: config.db.port,
-    database: config.db.dbname,
-    user: config.db.username,
-    password: config.db.password
+let db = new sequelize(config.db.dbname, config.db.username, config.db.password, {
+    dialect: "postgres",
+    host: config.db.host,
+    port: config.db.port
 });
 
 // Liga o handlebars no servidor
@@ -48,12 +46,21 @@ app.use("/api", require("./routes/api/posts.js"));
 
 // Configura as rotas base
 app.use("/", require("./routes/login.js"));
-app.use("/", require("./routes/index.js"));
+app.use("/", require("./routes/home.js"));
 
 // Conecta no banco de dados
 console.info("[INFO]: Tentando conectar na base de dados \"" + config.db.dbname + "\" em " + config.db.address + ":" + config.db.port);
-db.connect().then(() => {
+db.authenticate().then(async () => {
     console.info("[INFO]: Conexão ao banco bem-sucedida!");
+    // Inicializa os valores-padrão no banco de dados
+    const entities = require("./entities")(db);
+    await entities.sync();
+    await entities.seed();
+    // Insere uma referência às entidades do banco na aplicação
+    app.use((req, res, next) => {
+        res.locals.entities = require("./entities");
+        next();
+    });
     // Inicia a aplicação
     app.listen(config.port, config.address, () => {
         console.info("[INFO]: Servidor iniciado em " + config.address + ":" + config.port);
@@ -68,6 +75,6 @@ db.connect().then(() => {
         }
     });
 }).catch(err => {
-    console.error("[ERROR]: Falha ao conectar no banco de dados: " + err);
+    console.error(err.stack);
     process.exit(-1);
 });

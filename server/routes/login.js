@@ -28,7 +28,7 @@ async function checkPassword(db, user, passwd) {
 router.post("/login", async (req, res) => {
     let username = req.body.name || "";
     let password = req.body.passwd || "";
-    let returnAddr = req.query.return || "/";
+    let returnAddr = req.query.returnTo || "/";
     let db = res.locals.db;
     console.info("[INFO]: POST /login");
     console.info("[INFO]: Tentativa de login: " + username);
@@ -43,7 +43,7 @@ router.post("/login", async (req, res) => {
         // Envia mensagem de erro de volta ao cliente junto ao endereço
         returnAddr += "?err=login";
     }
-    res.redirect(returnAddr);
+    res.render(returnAddr);
 });
 
 // Cancela a autenticação do usuário

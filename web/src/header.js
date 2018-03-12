@@ -38,6 +38,6 @@ $(document).ready(() => {
         history.replaceState({}, document.title, queryParser.getURIWithoutQueryParam("err"));
     }
     // Configura os endereço de retorno das ações de usuário
-    loginForm.attr("action", "/login?return=" + encodeURIComponent(location.href));
-    logoutForm.attr("action", "/logout?return=" + encodeURIComponent(location.href));
+    loginForm.attr("action", "/login?returnTo=" + encodeURIComponent(location.href));
+    logoutForm.attr("action", "/logout?returnTo=" + encodeURIComponent(location.href));
 });
