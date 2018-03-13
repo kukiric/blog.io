@@ -2,16 +2,16 @@
     <div class="d-flex justify-content-between align-items-center">
         <a class="h2 post-title" href="/posts/{{id}}">{{ title }}</a>
         {{#if @root.user }}
-        <input class="d-none post-title-editor h2 w-50" type="text h2">
-        <div class="btn-group btn-group-sm">
-            <button class="btn btn-outline-dark" onclick="editPost({{id}})">Editar</button>
-            <button class="btn btn-outline-danger" onclick="removePost({{id}})">Remover</button>
-        </div>
-        <div class="d-none btn-group btn-group-sm">
-            <button class="btn btn-outline-success" onclick="savePost({{id}})">Salvar</button>
-            <button class="btn btn-outline-dark" onclick="cancelEdit()">Cancelar</button>
-            <button class="btn btn-outline-danger" onclick="removePost{{id}})">Remover</button>
-        </div>
+            <input class="d-none post-title-editor h2 w-50" type="text h2">
+            <div class="btn-group btn-group-sm">
+                <button class="btn btn-outline-dark" onclick="editPost({{id}})">Editar</button>
+                <button class="btn btn-outline-danger" onclick="removePost({{id}})">Remover</button>
+            </div>
+            <div class="d-none btn-group btn-group-sm">
+                <button class="btn btn-outline-success" onclick="savePost({{id}})">Salvar</button>
+                <button class="btn btn-outline-dark" onclick="cancelEdit()">Cancelar</button>
+                <button class="btn btn-outline-danger" onclick="removePost{{id}})">Remover</button>
+            </div>
         {{/if}}
     </div>
     <div class="d-flex justify-content-between">
@@ -19,17 +19,17 @@
         <span class="mb-w text-muted">{{ dateTime createdAt }}</span>
     </div>
     <a href="/posts/{{id}}">
-        <img class="rounded img-fluid" src="https://picsum.photos/800/200?image={{image}}">
+        <img class="rounded img-fluid" src="https://picsum.photos/800/200?image={{ image }}">
     </a>
     <br><br>
     <div class="post-content">{{{ markdown content }}}</div>
     {{#if @root.user }}
-    <textarea class="d-none post-editor"></textarea>
+        <textarea class="d-none post-editor"></textarea>
     {{/if}}
     {{#if isLong }}
-    <div class="d-flex flex-column justify-content-center">
-        <div class="text-muted h3 text-center">. . . . .</div>
-        <button class="btn btn-primary col-xl-2 col-lg-4 col-md-6 mx-auto">Ler mais</button>
-    </div>
+        <div class="d-flex flex-column justify-content-center">
+            <div class="text-muted h3 text-center">. . . . .</div>
+            <a class="btn btn-primary col-xl-2 col-lg-4 col-md-6 mx-auto" href="/posts/{{ id }}">Ler mais</a>
+        </div>
     {{/if}}
 </article>

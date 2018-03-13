@@ -13,7 +13,19 @@ router.get("/posts", async (req, res) => {
         isLastPage: recentPosts.isLastPage,
         nextPage: page + 1,
         prevPage: page - 1,
-        header: "Posts - Página " + page + 1
+        header: "Posts - Página " + (page + 1)
+    });
+});
+
+router.get("/posts/:id", async (req, res) => {
+    let id = req.params.id;
+    let post = await postFinder.getSinglePost(id);
+    res.render("posts", {
+        pageName: post.title,
+        user: req.cookies.username,
+        posts: [post],
+        isFirstPage: true,
+        isLastPage: true
     });
 });
 
