@@ -1,6 +1,8 @@
 <br>
-{{> header }}
-<hr>
+{{#unless isSinglePost}}
+    {{> header }}
+    <hr>
+{{/unless}}
 <div class="row">
     <!-- Menu lateral -->
     <div class="col-lg-4 col-md-12 order-lg-2">
@@ -13,8 +15,10 @@
             <hr>
         {{/each}}
         <div class="btn-group w-100">
-        <a class="btn btn-light w-50 {{#if isFirstPage}} disabled {{/if}}" href="/posts/?page={{prevPage}}">Página anterior</a>
-        <a class="btn btn-light w-50 {{#if isLastPage}} disabled {{/if}}" href="/posts/?page={{nextPage}}">Próxima página</a>
+        {{#unless isSinglePost}}
+            <a class="btn btn-light w-50 {{#if isFirstPage}} disabled {{/if}}" href="/posts/?page={{prevPage}}">Página anterior</a>
+            <a class="btn btn-light w-50 {{#if isLastPage}} disabled {{/if}}" href="/posts/?page={{nextPage}}">Próxima página</a>
+        {{/unless}}
     </div>
     </div>
 </div>

@@ -19,7 +19,7 @@ router.get("/posts", async (req, res) => {
     });
 });
 
-// Retorna um post
+// Retorna um único post
 router.get("/posts/:id", async (req, res) => {
     let id = req.params.id;
     let post = await postFinder.getSinglePost(id);
@@ -27,9 +27,8 @@ router.get("/posts/:id", async (req, res) => {
         pageName: post.title,
         user: req.cookies.fullName,
         username: req.cookies.username,
+        isSinglePost: true,
         posts: [post],
-        isFirstPage: true,
-        isLastPage: true
     });
 });
 
