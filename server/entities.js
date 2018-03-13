@@ -1,7 +1,5 @@
 const seq = require("sequelize");
 
-console.log("Criado módulo entities");
-
 module.exports = {
     User: undefined,
     Post: undefined,

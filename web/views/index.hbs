@@ -1,7 +1,11 @@
 <br><br>
-<h1>Posts recentes:</h1>
+{{> header }}
 {{#each posts}}
     <hr>
-    {{> post}}
+    {{> post }}
 {{/each}}
 <hr>
+{{#unless isLastPage}}
+<a class="text-center page-link w-100" href="/api/posts">Todos os posts</a>
+<br>
+{{/unless}}

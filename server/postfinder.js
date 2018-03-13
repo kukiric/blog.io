@@ -1,10 +1,6 @@
 /// @ts-check
 const e = require("./entities.js");
-
-/**
- * Número de ítens a serem retornados por página
- */
-const ITEMS_PER_PAGE = 10;
+const moment = require("moment");
 
 /**
  * Reduz o texto até o final do primeiro parágrafo, ignorando linhas que começam com # (título)
@@ -15,6 +11,14 @@ function shorten(text) {
     const regex = /(\s*)(#.+\n+)?((.+\n?)+$)/m;
     let matches = regex.exec(text);
     return matches[0] || text;
+}
+
+/**
+ * Retorna um ID de imagem para um devido timestamp de criação para uso no Lorem Picsum
+ */
+function getImageID(date) {
+    let timestamp = moment(date).unix();
+    return timestamp % 1085;
 }
 
 /**
@@ -30,7 +34,7 @@ module.exports = {
     getSinglePost: async function(id) {
         try {
             let result = await e.Post.findOne({
-                attributes: [ "title", "content", "createdAt", "creatorId" ],
+                attributes: [ "id", "title", "content", "createdAt", "creatorId" ],
                 include: [
                     { model: e.User, as: "creator", attributes: [ "fullName" ] },
                     { model: e.Comment, attributes: [ "creator", "content", "createdAt" ] }
@@ -41,6 +45,8 @@ module.exports = {
             });
             // Remove o id do usuário antes de retornar
             result.creatorId = undefined;
+            // Define o id da imagem com base na data de criação
+            result.image = getImageID(result.createdAt);
             return result;
         }
         catch(err) {
@@ -50,18 +56,19 @@ module.exports = {
     },
 
     /**
-     * Retorna até N posts de forma paginada, do mais recente para o mais antigo
+     * Retorna posts de forma paginada, do mais recente para o mais antigo
+     * @param {number} num Número de ítens por página
      * @param {number} page Número da página
      * @param {boolean} short Se os posts devem ser retornado em forma reduzida (apenas até o final do primeiro parágrafo)
      * @see ITEMS_PER_PAGE Número de ítens por página
      */
-    getMostRecentPaged: async function(page, short) {
+    getMostRecentPaged: async function(num, page, short) {
         try {
-            let limit = ITEMS_PER_PAGE, offset = ITEMS_PER_PAGE * page;
+            let limit = num, offset = num * page;
             let results = await e.Post.findAll({
                 limit: limit,
                 offset: offset,
-                attributes: [ "title", "content", "createdAt", "creatorId" ],
+                attributes: [ "id", "title", "content", "createdAt", "creatorId" ],
                 include: [
                     { model: e.User, as: "creator", attributes: [ "fullName" ] },
                     { model: e.Comment, attributes: [ "creator", "content", "createdAt" ] }
@@ -80,9 +87,13 @@ module.exports = {
                     return item;
                 });
             }
-            // Adiciona marcador de última página e remove o id do usuário antes de retornar
+            // Adiciona marcador de última página, id de imagem, e remove o id do usuário antes de retornar
             return {
-                data: results.map(item => { item.creatorId = undefined; return item; }),
+                data: results.map(item => {
+                    item.creatorId = undefined;
+                    item.image = getImageID(item.createdAt);
+                    return item;
+                }),
                 isLastPage: results.isLastPage = offset + limit >= tableSize
             };
         }

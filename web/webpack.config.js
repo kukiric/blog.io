@@ -6,7 +6,6 @@ module.exports = {
     devtool: process.env.NODE_ENV === "development" ? "source-map" : "none",
     context: path.resolve(__dirname, "src"),
     entry: {
-        header: "./header.js",
         index: "./index.js"
     },
     optimization: {

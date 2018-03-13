@@ -73,7 +73,7 @@ db.authenticate().then(async () => {
     });
 
     // Configura as rotas da API
-    app.use("/api", require("./routes/api/posts.js").router);
+    app.use("/api", require("./routes/api/posts.js"));
 
     // Configura as rotas base
     app.use("/", require("./routes/login.js"));

@@ -2,6 +2,12 @@
     font-family: "Pacifico";
 }
 
+.post-editor, .post-title-editor {
+    border: 1px solid lightgray;
+    overflow-x: hidden;
+    width: 100%;
+}
+
 /* Campo sem destaque até ser selecionado */
 .form-faded {
     transition: 200ms;

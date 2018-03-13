@@ -2,9 +2,14 @@ const postFinder = require("../postfinder.js");
 const router = require("express").Router();
 
 router.get("/", async (req, res) => {
-    // Preenche o objeto de posts do cliente com os 10 posts mais recentes
-    const recentPosts = await postFinder.getMostRecentPaged(0, true);
-    res.render("index", { pageName: "Home", posts: recentPosts.data });
+    // Preenche o objeto de posts do cliente com os 5 posts mais recentes
+    const recentPosts = await postFinder.getMostRecentPaged(5, 0, true);
+    res.render("index", {
+        pageName: "Home",
+        user: req.cookies.username,
+        posts: recentPosts.data,
+        isLastPage: recentPosts.isLastPage
+    });
 });
 
 module.exports = router;

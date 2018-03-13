@@ -6,6 +6,7 @@
             <a class="nav-item nav-link {{ insertEquals "active" pageName "Home" }}" data-page="index" href="/">Home</a>
             <a class="nav-item nav-link {{ insertEquals "active" pageName "Posts" }}" data-page="posts" href="/api/posts?pretty=1">Posts</a>
         </div>
+        {{#unless user }}
         <!-- Botão de opções extras na área de navegação para mobile -->
         <button class="navbar-toggler" id="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="navbar-toggler-icon"></span>
@@ -19,13 +20,16 @@
                 <button class="form-control btn btn-secondary ml-1" id="login-btn" type="submit">Entrar</button>
             </form>
         </div>
+        {{/unless}}
+        {{#if user }}
         <!-- Widget do usuário logado -->
-        <div class="navbar-nav flex-row d-none justify-content-end" id="user-widget">
-            <span class="navbar-text text-white font-weight-bold" id="user-name">Usuário</span>
+        <div class="navbar-nav flex-row justify-content-end" id="user-widget">
+            <span class="navbar-text text-white font-weight-bold" id="user-name">{{ user }}</span>
             <span class="navbar-text ml-2">/</span>
             <form class="nav-item" id="logout-form" action="/logout" method="POST">
                 <button class="nav-link fake-button-link" id="logout-btn" type="submit">Sair</button>
             </form>
         </div>
+        {{/if}}
     </div>
 </nav>
