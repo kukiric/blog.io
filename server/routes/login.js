@@ -1,5 +1,4 @@
-const express = require("express");
-const router = express.Router();
+const router = require("express").Router();
 
 // Busca o usuário no banco de dados
 async function findUser(e, name) {

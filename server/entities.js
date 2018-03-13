@@ -1,12 +1,13 @@
 const seq = require("sequelize");
 
+console.log("Criado módulo entities");
+
 module.exports = {
     User: undefined,
     Post: undefined,
     Comment: undefined,
 
     /**
-     * Define e sincroniza as entidades do banco
      * @param {seq.Sequelize} db Instância do banco criado pelo Sequelize
      */
     sync: async function(db) {
@@ -17,17 +18,21 @@ module.exports = {
             username: { type: seq.STRING, allowNull: false, unique: true },
             fullName: { type: seq.STRING, allowNull: false },
             passwd: { type: seq.STRING, allowNull: false }
-        }),
+        });
 
         this.Post = db.define("post", {
             title: { type: seq.STRING, allowNull: false },
             content: { type: seq.TEXT, allowNull: false }
-        }),
+        });
 
         this.Comment = db.define("comment", {
             creator: { type: seq.STRING, allowNull: false },
             content: { type: seq.TEXT, allowNull: false }
-        }),
+        });
+
+        this.Tag = db.define("tag", {
+            name: { type: seq.STRING, allowNull: false, unique: true }
+        });
 
         // Define as relações
         this.Post.belongsTo(this.User, { as: "creator", foreignKey: { allowNull: false } });
@@ -63,5 +68,11 @@ module.exports = {
             content: "Primeiro comentário!",
             postId: post[0].id
         }, opts);
+
+        return [
+            user,
+            post,
+            comment
+        ];
     }
 };

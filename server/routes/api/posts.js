@@ -1,58 +1,11 @@
-const express = require("express");
-const router = express.Router();
-
-const ITEMS_PER_PAGE = 10;
-
-async function getSinglePost(e, id) {
-    try {
-        const result = await e.Post.findOne({
-            attributes: [ "title", "content", "createdAt", "creatorId" ],
-            include: [
-                { model: e.User, as: "creator", attributes: [ "fullName" ] },
-                { model: e.Comment, attributes: [ "creator", "content", "createdAt" ] }
-            ],
-            where: {
-                id: id
-            }
-        });
-        // Remove o id do usuário antes de retornar
-        result.creatorId = undefined;
-        return result;
-    }
-    catch(err) {
-        console.error(err.stack);
-        return null;
-    }
-};
-
-async function getMostRecentPaged(e, page) {
-    try {
-        const results = await e.Post.findAll({
-            limit: ITEMS_PER_PAGE,
-            offset: ITEMS_PER_PAGE * page,
-            attributes: [ "title", "content", "createdAt", "creatorId" ],
-            include: [
-                { model: e.User, as: "creator", attributes: [ "fullName" ] },
-                { model: e.Comment, attributes: [ "creator", "content", "createdAt" ] }
-            ],
-            order: [
-                [ "createdAt", "desc" ]
-            ]
-        });
-        // Remove o id do usuário antes de retornar
-        return results.map(item => { item.creatorId = undefined; return item; });
-    }
-    catch(err) {
-        console.error(err.stack);
-        return null;
-    }
-};
+const router = require("express").Router();
+const postFinder = require("../../postfinder.js");
 
 // Retorna até 10 posts mais recentes por página
 router.get("/posts", async (req, res) => {
     let page = req.query.p || 0;
     let entities = res.locals.entities;
-    let posts = await getMostRecentPaged(entities, page);
+    let posts = await postFinder.getMostRecentPaged(page);
     res.contentType("json");
     res.send(JSON.stringify(posts));
 });
@@ -67,7 +20,7 @@ router.get("/posts/:id", async (req, res) => {
     let id = req.params.id;
     console.info("[INFO]: GET /posts/" + id);
     let entities = res.locals.entities;
-    let post = await getSinglePost(entities, id);
+    let post = await postFinder.getSinglePost(id);
     res.contentType("json");
     res.send(JSON.stringify(post));
 });
@@ -88,7 +41,5 @@ router.delete("/posts/:id", async (req, res) => {
 });
 
 module.exports = {
-    getSinglePost: getSinglePost,
-    getAllPostsPaged: getMostRecentPaged,
     router: router
 };

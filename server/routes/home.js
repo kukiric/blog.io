@@ -1,12 +1,10 @@
-const express = require("express");
-const posts = require("./api/posts");
-const router = express.Router();
+const postFinder = require("../postfinder.js");
+const router = require("express").Router();
 
 router.get("/", async (req, res) => {
     // Preenche o objeto de posts do cliente com os 10 posts mais recentes
-    let entities = res.locals.entities;
-    const recentPosts = await posts.getAllPostsPaged(entities, 0);
-    res.render("index", {pageName: "Home", posts: recentPosts});
+    const recentPosts = await postFinder.getMostRecentPaged(0, true);
+    res.render("index", { pageName: "Home", posts: recentPosts.data });
 });
 
 module.exports = router;
