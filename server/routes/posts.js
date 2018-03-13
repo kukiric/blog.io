@@ -4,7 +4,8 @@ const router = require("express").Router();
 router.get("/posts", async (req, res) => {
     // Preenche o objeto de posts do cliente com os 5 posts mais recentes
     let page = parseInt(req.query.page) || 0;
-    let recentPosts = await postFinder.getMostRecentPaged(5, page);
+    let query = req.query.q;
+    let recentPosts = await postFinder.getMostRecentPaged(5, page, false, query);
     res.render("posts", {
         pageName: "Posts",
         user: req.cookies.username,

@@ -60,11 +60,22 @@ module.exports = {
      * @param {number} num Número de ítens por página
      * @param {number} page Número da página
      * @param {boolean} short Se os posts devem ser retornado em forma reduzida (apenas até o final do primeiro parágrafo)
+     * @param {string} title Valor a ser buscado no título dos posts
      * @see ITEMS_PER_PAGE Número de ítens por página
      */
-    getMostRecentPaged: async function(num, page, short) {
+    getMostRecentPaged: async function(num, page, short, title) {
         try {
             let limit = num, offset = num * page;
+            let where = undefined;
+            // Constroi o objeto de busca
+            if (title) {
+                where = {
+                    title: {
+                        $iLike: "%" + title + "%"
+                    }
+                };
+            }
+            // Realiza a busca
             let results = await e.Post.findAll({
                 limit: limit,
                 offset: offset,
@@ -75,9 +86,12 @@ module.exports = {
                 ],
                 order: [
                     [ "createdAt", "desc" ]
-                ]
+                ],
+                where: where
             });
-            let tableSize = await e.Post.count();
+            let resultSize = await e.Post.count({
+                where: where
+            });
             // Reduz o tamanho do corpo de texto dos posts se necessária abreviação
             if (short) {
                 results = results.map(item => {
@@ -94,7 +108,7 @@ module.exports = {
                     item.image = getImageID(item.createdAt);
                     return item;
                 }),
-                isLastPage: results.isLastPage = offset + limit >= tableSize
+                isLastPage: results.isLastPage = offset + limit >= resultSize
             };
         }
         catch(err) {
