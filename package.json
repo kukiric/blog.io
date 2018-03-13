@@ -4,7 +4,7 @@
   "description": "Uma plataforma inovadora para blogs",
   "main": "server/main.js",
   "scripts": {
-    "server": "node server/main.js",
+    "start": "node server/main.js",
     "dev": "cross-env NODE_ENV=development node --inspect server/main.js",
     "build": "webpack --config web/webpack.config.js"
   },
