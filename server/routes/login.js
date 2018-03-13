@@ -42,8 +42,8 @@ router.post("/login", async (req, res) => {
     console.info("[INFO]: Tentativa de login: " + username);
     let user = await findUser(entities, username);
     if (user && await checkPassword(entities, user, password)) {
-        res.cookie("username", user.fullName);
-        res.cookie("auth-token", "0");
+        res.cookie("fullName", user.fullName);
+        res.cookie("username", user.username);
         console.info("[INFO]: Usuário logado com sucesso");
     }
     else {
@@ -59,7 +59,7 @@ router.post("/logout", (req, res) => {
     let returnAddr = req.query.returnTo || "/";
     console.info("[INFO]: Deslogando: " + req.cookies.username);
     res.clearCookie("username");
-    res.clearCookie("auth-token");
+    res.clearCookie("fullName");
     res.redirect(returnAddr);
 });
 

@@ -115,5 +115,55 @@ module.exports = {
             console.error(err.stack);
             return null;
         }
+    },
+
+    /**
+     * Envia um novo post para o banco de dados
+     */
+    submitPost: async function(title, content, username) {
+        try {
+            // Encontra o usuário logado
+            let user = await e.User.findOne({
+                where: {
+                    username: username
+                }
+            });
+
+            // Cria um post novo com o nome dele
+            let result = await e.Post.create({
+                title: title,
+                content: content,
+                creatorId: user.id
+            });
+
+            return result;
+        }
+        catch(err) {
+            console.error(err.stack);
+            return null;
+        }
+    },
+
+    /**
+     * Remove um post do banco
+     */
+    deletePost: async function(id, username) {
+        try {
+            // Valida os parâmetros antes da remoçao
+            if (id != null && username) {
+                let result = e.Post.destroy({
+                    where: {
+                        id: id
+                    },
+                    cascade: true
+                });
+                return result;
+            }
+            return false;
+        }
+        catch(err) {
+            console.error(err.stack);
+            return null;
+        }
     }
 };

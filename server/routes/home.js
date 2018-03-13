@@ -6,7 +6,8 @@ router.get("/", async (req, res) => {
     let recentPosts = await postFinder.getMostRecentPaged(5, 0, true);
     res.render("index", {
         pageName: "Home",
-        user: req.cookies.username,
+        user: req.cookies.fullName,
+        username: req.cookies.username,
         posts: recentPosts.data,
         isLastPage: recentPosts.isLastPage,
         header: "Posts Recentes"
