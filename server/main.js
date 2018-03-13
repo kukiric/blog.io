@@ -73,6 +73,7 @@ db.authenticate().then(async () => {
 
     // Configura as rotas base
     app.use("/", require("./routes/login.js"));
+    app.use("/", require("./routes/posts.js"));
     app.use("/", require("./routes/home.js"));
 
     // Inicia a aplicação
