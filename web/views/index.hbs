@@ -1,11 +1,20 @@
 <br><br>
 {{> header }}
-{{#each posts}}
-    <hr>
-    {{> post }}
-{{/each}}
 <hr>
-{{#unless isLastPage}}
-<a class="text-center page-link w-100" href="/api/posts">Todos os posts</a>
-<br>
-{{/unless}}
+<div class="row">
+    <!-- Menu lateral -->
+    <div class="col-lg-4 col-md-12 order-lg-2">
+        {{> sidebar }}
+    </div>
+    <!-- Área dos posts -->
+    <div class="col-lg-8 col-md-12 order-lg-1">
+        {{#each posts}}
+            {{> post }}
+            <hr>
+        {{/each}}
+        {{#unless isLastPage}}
+            <a class="text-center page-link w-100" href="/api/posts">Todos os posts</a>
+            <br>
+        {{/unless}}
+    </div>
+</div>

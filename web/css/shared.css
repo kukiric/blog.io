@@ -8,6 +8,10 @@
     width: 100%;
 }
 
+.card-body > .d-inline > a {
+    padding-right: 1em;
+}
+
 /* Campo sem destaque até ser selecionado */
 .form-faded {
     transition: 200ms;

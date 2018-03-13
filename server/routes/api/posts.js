@@ -3,7 +3,7 @@ const postFinder = require("../../postfinder.js");
 
 // Retorna até 10 dos posts mais recentes por página
 router.get("/posts", async (req, res) => {
-    let page = req.query.p || 0;
+    let page = req.query.page || 0;
     let posts = await postFinder.getMostRecentPaged(10, page);
     res.contentType("json");
     res.send(JSON.stringify(posts));
