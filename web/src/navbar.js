@@ -38,7 +38,7 @@ $(document).ready(() => {
         // Remove o parâmetro para não continuar na próxima página
         history.replaceState({}, document.title, queryParser.getURIWithoutQueryParam("err"));
     }
-    // Configura os endereço de retorno das ações de usuário
+    // Configura os endereços de retorno das ações de usuário
     loginForm.attr("action", "/login?returnTo=" + encodeURIComponent(location.href));
     logoutForm.attr("action", "/logout?returnTo=" + encodeURIComponent(location.href));
 });

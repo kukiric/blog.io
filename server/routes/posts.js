@@ -12,7 +12,8 @@ router.get("/posts", async (req, res) => {
         isFirstPage: page == 0,
         isLastPage: recentPosts.isLastPage,
         nextPage: page + 1,
-        prevPage: page - 1
+        prevPage: page - 1,
+        header: "Posts - Página " + page + 1
     });
 });
 

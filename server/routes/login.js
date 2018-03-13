@@ -56,7 +56,7 @@ router.post("/login", async (req, res) => {
 
 // Cancela a autenticação do usuário
 router.post("/logout", (req, res) => {
-    let returnAddr = req.query.return || "/";
+    let returnAddr = req.query.returnTo || "/";
     console.info("[INFO]: Deslogando: " + req.cookies.username);
     res.clearCookie("username");
     res.clearCookie("auth-token");

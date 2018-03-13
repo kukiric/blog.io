@@ -8,7 +8,8 @@ router.get("/", async (req, res) => {
         pageName: "Home",
         user: req.cookies.username,
         posts: recentPosts.data,
-        isLastPage: recentPosts.isLastPage
+        isLastPage: recentPosts.isLastPage,
+        header: "Posts Recentes"
     });
 });
 
