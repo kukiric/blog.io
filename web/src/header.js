@@ -13,7 +13,5 @@ $(document).ready(() => {
             form.removeClass("d-none");
             form.find("input[name='title']").focus();
         });
-        // Configura o endereço de retorno da criação de post
-        form.prop("action", "/posts?returnTo=" + encodeURIComponent(location.href));
     }
 });

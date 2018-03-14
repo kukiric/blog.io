@@ -37,7 +37,7 @@ async function checkPassword(e, user, passwd) {
 router.post("/login", async (req, res) => {
     let username = req.body.name || "";
     let password = req.body.passwd || "";
-    let returnAddr = req.query.returnTo || "/";
+    let returnAddr = req.query.return || "/";
     let entities = res.locals.entities;
     console.info("[INFO]: Tentativa de login: " + username);
     let user = await findUser(entities, username);
@@ -56,7 +56,7 @@ router.post("/login", async (req, res) => {
 
 // Cancela a autenticação do usuário
 router.post("/logout", (req, res) => {
-    let returnAddr = req.query.returnTo || "/";
+    let returnAddr = req.query.return || "/";
     console.info("[INFO]: Deslogando: " + req.cookies.username);
     res.clearCookie("username");
     res.clearCookie("fullName");

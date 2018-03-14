@@ -7,7 +7,6 @@ const errors = {
 
 $(document).ready(() => {
     let loginForm = $("#login-form");
-    let logoutForm = $("#logout-form");
     // Exibe mensagem de erro se necessário
     let queryParser = new QueryParser(window);
     let errorType = queryParser.getQueryParam("err");
@@ -21,7 +20,4 @@ $(document).ready(() => {
         // Remove o parâmetro para não continuar na próxima página
         history.replaceState({}, document.title, queryParser.getURIWithoutQueryParam("err"));
     }
-    // Configura os endereços de retorno das ações de usuário
-    loginForm.prop("action", "/login?returnTo=" + encodeURIComponent(location.href));
-    logoutForm.prop("action", "/logout?returnTo=" + encodeURIComponent(location.href));
 });

@@ -1,7 +1,7 @@
 <article class="post" data-id="{{id}}">
     <div class="d-flex justify-content-between align-items-center">
         <!-- Título -->
-        <a class="h2 post-title" href="/posts/{{id}}">{{ title }}</a>
+        <a class="h2 post-title" href="/posts/{{id}}">{{title}}</a>
         <!-- Barras de ferramentas -->
         {{#if @root.user }}
             <!-- Edição de título -->
@@ -9,14 +9,14 @@
             <!-- Modo edição desligado -->
             <form class="d-block m-0 p-0" method="POST">
                 <div class="btn-group btn-group-sm">
-                    <button class="btn btn-outline-dark" formaction="">Editar</button>
-                    <button class="btn btn-outline-danger" formaction="/posts/{{id}}/delete">Remover</button>
+                    <button class="btn btn-outline-dark" type="button">Editar</button>
+                    <button class="btn btn-outline-danger" formaction="/posts/{{id}}/delete?return={{@root/href}}">Remover</button>
                 </div>
                 <!-- Modo edição ligado -->
                 <div class="d-none btn-group btn-group-sm">
-                    <button class="btn btn-outline-success" formaction="">Salvar</button>
-                    <button class="btn btn-outline-dark" formaction="">Cancelar</button>
-                    <button class="btn btn-outline-danger" formaction="/posts/{{id}}/delete">Remover</button>
+                    <button class="btn btn-outline-success" type="button">Salvar</button>
+                    <button class="btn btn-outline-dark" type="button">Cancelar</button>
+                    <button class="btn btn-outline-danger" formaction="/posts/{{id}}/delete?return={{@root/href}}">Remover</button>
                 </div>
             </form>
         {{/if}}
@@ -41,7 +41,7 @@
     {{#if isLong }}
         <div class="d-flex flex-column justify-content-center">
             <div class="text-muted h3 text-center">. . . . .</div>
-            <a class="btn btn-primary col-xl-2 col-lg-4 col-md-6 mx-auto" href="/posts/{{ id }}">Ler mais</a>
+            <a class="btn btn-primary col-xl-2 col-lg-4 col-md-6 mx-auto" href="/posts/{{id}}">Ler mais</a>
         </div>
     {{/if}}
 </article>

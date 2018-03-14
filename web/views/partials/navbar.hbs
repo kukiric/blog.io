@@ -3,8 +3,8 @@
         <a class="navbar-brand" href="/">Blog.io</a>
         <!-- Ítens da navegação -->
         <div class="navbar-nav flex-row mr-auto">
-            <a class="nav-item nav-link {{ insertEquals "active" pageName "Home" }}" data-page="index" href="/">Home</a>
-            <a class="nav-item nav-link {{ insertEquals "active" pageName "Posts" }}" data-page="posts" href="/posts">Posts</a>
+            <a class="nav-item nav-link {{ insertEquals "active" activeMenu "home" }}" data-page="index" href="/">Home</a>
+            <a class="nav-item nav-link {{ insertEquals "active" activeMenu "posts" }}" data-page="posts" href="/posts">Posts</a>
         </div>
         {{#unless user }}
         <!-- Botão de opções extras na área de navegação para mobile -->
@@ -14,7 +14,7 @@
         <div class="navbar-collapse collapse justify-content-end">
             <!-- Widget de login -->
             <script type="text/text" id="error"></script>
-            <form class="nav-item form-inline flex-nowrap form-faded" id="login-form" data-trigger="manual" action="/login" method="POST">
+            <form class="nav-item form-inline flex-nowrap form-faded" id="login-form" data-trigger="manual" action="/login?return={{href}}" method="POST">
                 <input class="form-control mx-1" name="name" type="text" required placeholder="Usuário">
                 <input class="form-control mx-1" name="passwd" type="password" required placeholder="Senha">
                 <button class="form-control btn btn-secondary ml-1" id="login-btn" type="submit">Entrar</button>
@@ -24,9 +24,9 @@
         {{#if user }}
         <!-- Widget do usuário logado -->
         <div class="navbar-nav flex-row justify-content-end" id="user-widget">
-            <span class="navbar-text text-white font-weight-bold" id="user-name">{{ user }}</span>
+            <span class="navbar-text text-white font-weight-bold" id="user-name">{{user}}</span>
             <span class="navbar-text ml-2">/</span>
-            <form class="nav-item" id="logout-form" action="/logout" method="POST">
+            <form class="nav-item" id="logout-form" action="/logout?return={{href}}" method="POST">
                 <button class="nav-link fake-button-link" id="logout-btn" type="submit">Sair</button>
             </form>
         </div>

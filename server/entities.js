@@ -4,6 +4,7 @@ module.exports = {
     User: undefined,
     Post: undefined,
     Comment: undefined,
+    Tag: undefined,
 
     /**
      * @param {seq.Sequelize} db Instância do banco criado pelo Sequelize
@@ -19,7 +20,7 @@ module.exports = {
         });
 
         this.Post = db.define("post", {
-            title: { type: seq.STRING, allowNull: false },
+            title: { type: seq.STRING, allowNull: false, unique: true },
             content: { type: seq.TEXT, allowNull: false }
         });
 
@@ -53,24 +54,14 @@ module.exports = {
 
         // Cria o primeiro post do blog
         const post = await this.Post.upsert({
-            id: 1,
             title: "Bem vindo ao Blog.io!",
             content: require("./lipsum.js"),
             creatorId: user[0].id
         }, opts);
 
-        // Cria o primeiro comentário do blog
-        const comment = await this.Comment.upsert({
-            id: 1,
-            creator: "Comentador",
-            content: "Primeiro comentário!",
-            postId: post[0].id
-        }, opts);
-
         return [
             user,
-            post,
-            comment
+            post
         ];
     }
 };

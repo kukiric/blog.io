@@ -5,7 +5,7 @@
     {{/if}}
 </div>
 {{#if user }}
-<form class="d-none" id="new-post" method="post" action="/posts">
+<form class="d-none" id="new-post" method="post" action="/posts?return={{href}}">
     <hr>
     <input class="h2 post-title-editor" name="title" placeholder="Título" required autocomplete="off" type="text">
     <textarea class="post-editor" name="content" placeholder="Corpo do texto" required rows="16"></textarea>
