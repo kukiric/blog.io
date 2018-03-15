@@ -17,7 +17,6 @@ Factory.blueprint("App/Models/User", async (faker, i, data) => {
     return {
         username: data.username || faker.username(),
         password: data.password || faker.password(),
-        email: data.email || faker.email(),
         full_name: data.full_name || faker.name()
     };
 });
@@ -25,10 +24,14 @@ Factory.blueprint("App/Models/User", async (faker, i, data) => {
 Factory.blueprint("App/Models/Post", async (faker, i, data) => {
     return {
         title: data.title || faker.sentence({
-            words: faker.natural({min: 4, max: 8})
+            words: faker.natural({min: 3, max: 5})
         }),
         content: data.content || faker.paragraph({
-            sentences: faker.natural({min: 3, max: 10})
+            sentences: faker.natural({min: 3, max: 8})
+        }),
+        created_at: data.created_at || faker.date({
+            string: true,
+            american: false
         })
     };
 });

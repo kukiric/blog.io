@@ -1,0 +1,48 @@
+<article class="post" data-id="{{post.id}}">
+    <div class="d-flex justify-content-between align-items-center">
+        {{-- Título --}}
+        <a class="h2 post-title" href="/posts/{{post.id}}">{{post.title}}</a>
+        {{-- Barras de ferramentas --}}
+        @loggedIn
+        {{-- Edição de título --}}
+        <input class="d-none post-title-editor h2 w-50" autocomplete="off" type="text">
+        {{-- Modo edição desligado --}}
+        <form class="d-block m-0 p-0" method="POST">
+            <div class="btn-group btn-group-sm">
+                <button class="btn btn-outline-dark" type="button">Editar</button>
+                <button class="btn btn-outline-danger" formaction="/posts/{{post.id}}/delete">Remover</button>
+            </div>
+            {{-- Modo edição ligado --}}
+            <div class="d-none btn-group btn-group-sm">
+                <button class="btn btn-outline-success" type="button">Salvar</button>
+                <button class="btn btn-outline-dark" type="button">Cancelar</button>
+                <button class="btn btn-outline-danger" formaction="/posts/{{post.id}}/delete">Remover</button>
+            </div>
+        </form>
+        @endloggedIn
+    </div>
+    {{-- Meta-dados --}}
+    <div class="d-flex justify-content-between">
+        <span class="mb-2">Autor: {{post.full_name}}</span>
+        <span class="mb-w text-muted">{{dateTime(post.created_at)}}</span>
+    </div>
+    {{-- Imagem --}}
+    <a href="/posts/{{post.id}}">
+        <img class="rounded img-fluid" src="https://picsum.photos/800/200?image={{imageId(post.created_at)}}">
+    </a>
+    <br><br>
+    {{-- Conteúdo --}}
+    <div class="post-content">{{{markdown(post.content, shortText)}}}</div>
+    {{-- Área de edição --}}
+    @loggedIn
+        <textarea class="d-none post-editor"></textarea>
+    @endloggedIn
+    {{-- Ler mais --}}
+    @if(shortText)
+        <div class="d-flex flex-column justify-content-center">
+            <div class="text-muted h3 text-center">. . . . .</div>
+            <a class="btn btn-primary col-xl-2 col-lg-4 col-md-6 mx-auto" href="/posts/{{post.id}}">Ler mais</a>
+        </div>
+    @endif
+</article>
+<hr>

@@ -2,6 +2,10 @@
     font-family: "Pacifico";
 }
 
+form.nav-item {
+    margin: 0;
+}
+
 .post-editor, .post-title-editor {
     border: 1px solid lightgray;
     overflow-x: hidden;

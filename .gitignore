@@ -4,8 +4,5 @@ node_modules
 # Arquivo de configuração local do projeto
 .env
 
-# Proteção local de versão do npm
-package-lock.json
-
 # Bancos de dados locais (SQLite)
 database/*.sqlite

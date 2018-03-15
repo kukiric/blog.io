@@ -18,11 +18,10 @@ class DatabaseSeeder {
         const admin = await Factory.model("App/Models/User").create({
             username: "admin",
             password: "admin",
-            email: "admin@localhost",
-            full_name: "Administrador"
+            full_name: "Ricardo Maes"
         });
         // Cria vários posts
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 23; i++) {
             const post = await Factory.model("App/Models/Post").make();
             await admin.posts().save(post);
         }

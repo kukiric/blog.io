@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Blog.io // {{ pageName }} </title>
+    {{-- Estilos --}}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Pacifico" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/app.css">
+    {{-- Scripts --}}
+    <script defer src="https://code.jquery.com/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script defer src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script defer src="/js/header.js"></script>
+    <script defer src="/js/navbar.js"></script>
+    <script defer src="/js/post.js"></script>
+</head>
+<body>
+    {{-- Barra de navegação --}}
+    @include("partials/navbar")
+    {{-- Conteúdo principal --}}
+    <div class="container" id="content">
+        @!section("content")
+    </div>
+</body>
+</html>

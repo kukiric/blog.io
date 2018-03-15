@@ -1,9 +1,8 @@
-import $ from "jquery";
+"use strict";
 
 $(document).ready(() => {
-    // Ativa os elementos do modo administrador
+    // Ativa os elementos do modo administrador em cada post
     if (window.username) {
-        // Para cada post
         $("article.post").each((index, element) => {});
     }
 });

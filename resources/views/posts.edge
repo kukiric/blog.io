@@ -1,0 +1,25 @@
+@layout("layouts/default")
+
+@section("content")
+    <br>
+    @include("partials/header")
+    <hr>
+    <div class="row">
+        {{-- Menu lateral --}}
+        <div class="col-lg-4 col-md-12 order-lg-2">
+            @include("partials/sidebar")
+        </div>
+        {{-- Área dos posts --}}
+        <div class="col-lg-8 col-md-12 order-lg-1">
+            @!each(post in posts, include = "partials/post")
+            {{--  Botões de paginação  --}}
+            @if(homeActive)
+                <a class="text-center page-link w-100" href="/posts?page=2">Ver mais postagens</a>
+                <br>
+            @elseif(page != null)
+                <a class="btn btn-primary " href="/posts?page={{ page - 1 }}">Página anterior</a>
+                <a class="btn btn-primary {{ isLastPage ? 'disabled' : ''}}" href="/posts?page={{ page + 1 }}">Próxima página</a>
+            @endif
+        </div>
+    </div>
+@endsection

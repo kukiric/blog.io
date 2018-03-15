@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar">
+    <div class="container d-flex justify-content-around">
+        <a class="navbar-brand" href="/">Blog.io</a>
+        {{-- Ítens da navegação --}}
+        <div class="navbar-nav flex-row mr-auto">
+            <a class="nav-item nav-link {{homeActive}}" data-page="index" href="/">Home</a>
+            <a class="nav-item nav-link {{postsActive}}" data-page="posts" href="/posts">Posts</a>
+        </div>
+        <span>Erro: {{ getErrorFor("login") }}</span>
+        @loggedIn
+        {{-- Widget do usuário logado --}}
+        <div class="navbar-nav flex-row justify-content-end" id="user-widget">
+            <span class="navbar-text text-white font-weight-bold" id="user-name">{{auth.user.full_name}}</span>
+            <span class="navbar-text ml-2">/</span>
+            <form class="nav-item" id="logout-form" action="/logout" method="POST">
+                <button class="nav-link fake-button-link" id="logout-btn" type="submit">Sair</button>
+            </form>
+        </div>
+        @else
+        {{-- Botão de opções extras na área de navegação para mobile --}}
+        <button class="navbar-toggler" id="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse justify-content-end">
+            {{-- Widget de login --}}
+            <script type="text/text" id="error"></script>
+            <form class="nav-item form-inline flex-nowrap form-faded" id="login-form" action="/login" method="POST">
+                <input class="form-control mx-1" name="username" type="text" required placeholder="Usuário">
+                <input class="form-control mx-1" name="password" type="password" required placeholder="Senha">
+                <button class="form-control btn btn-secondary ml-1" id="login-btn" type="submit">Entrar</button>
+            </form>
+        </div>
+        @endloggedIn
+    </div>
+</nav>

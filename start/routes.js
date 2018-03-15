@@ -15,4 +15,14 @@
 
 const Route = use("Route");
 
-Route.on("/").render("index");
+// Rotas de autenticação
+Route.post("/login", "UserController.login");
+Route.post("/logout", "UserController.logout");
+
+// Rotas dos posts
+Route.get("/", "PostController.home");
+Route.get("/posts", "PostController.list");
+Route.get("/posts/:id", "PostController.get");
+Route.post("/posts", "PostController.post");
+Route.post("/posts/:id/update", "PostController.update");
+Route.post("/posts/:id/delete", "PostController.delete");

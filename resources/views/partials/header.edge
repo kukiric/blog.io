@@ -1,14 +1,14 @@
 <div class="d-flex justify-content-between align-items-center">
     <h1>{{ header }}</h1>
-    {{#if user }}
-        <button class="btn btn-outline-success" id="new-button">Criar novo post</button>
-    {{/if}}
+    @loggedIn
+    <button class="btn btn-outline-success" id="new-button">Criar novo post</button>
+    @endloggedIn
 </div>
-{{#if user }}
-<form class="d-none" id="new-post" method="post" action="/posts?return={{href}}">
+@loggedIn
+<form class="d-none" id="new-post" method="post" action="/posts">
     <hr>
     <input class="h2 post-title-editor" name="title" placeholder="Título" required autocomplete="off" type="text">
     <textarea class="post-editor" name="content" placeholder="Corpo do texto" required rows="16"></textarea>
     <button class="form-control btn btn-success my-4" type="submit">Enviar</button>
 </form>
-{{/if}}
+@endloggedIn

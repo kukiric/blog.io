@@ -6,7 +6,9 @@
         "node": true
     },
     "globals": {
-        "use": false
+        "use": false,
+        "jQuery": false,
+        "$": false
     },
     "parserOptions": {
         "sourceType": "module",
