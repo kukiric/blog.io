@@ -1,8 +1,11 @@
 # Dependências instaladas pelo npm/yarn
-node_modules/
+node_modules
 
-# Arquivos de javascript compilados pelo webpack
-web/js/
+# Arquivo de configuração local do projeto
+.env
 
-# Arquivo de configuração do projeto com senhas
-appconfig.json
+# Proteção local de versão do npm
+package-lock.json
+
+# Bancos de dados locais (SQLite)
+database/*.sqlite

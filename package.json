@@ -1,36 +1,40 @@
 {
   "name": "estag.io",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Uma plataforma inovadora para blogs",
   "main": "server/main.js",
   "scripts": {
-    "start": "node server/main.js",
-    "dev": "cross-env NODE_ENV=development node --inspect server/main.js",
-    "build": "webpack --config web/webpack.config.js"
+    "start": "node server.js",
+    "test": "node ace test"
   },
+  "keywords": [
+    "adonisjs"
+  ],
   "author": "Ricardo Maes",
   "license": "MIT",
-  "devDependencies": {
-    "@types/sequelize": "^4.27.10",
-    "webpack": "^4.1.1",
-    "webpack-cli": "^2.0.10",
-    "webpack-dev-middleware": "^3.0.1"
-  },
+  "private": true,
   "dependencies": {
-    "body-parser": "^1.18.2",
+    "@adonisjs/ace": "^5.0.0",
+    "@adonisjs/auth": "^3.0.1",
+    "@adonisjs/bodyparser": "^2.0.2",
+    "@adonisjs/cors": "^1.0.5",
+    "@adonisjs/fold": "^4.0.7",
+    "@adonisjs/framework": "^5.0.4",
+    "@adonisjs/ignitor": "^2.0.5",
+    "@adonisjs/lucid": "^5.0.2",
+    "@adonisjs/session": "^1.0.20",
+    "@adonisjs/shield": "^1.0.6",
     "bootstrap": "^4.0.0",
-    "cookie-parser": "^1.4.3",
     "cross-env": "^5.1.4",
-    "express": "^4.16.2",
-    "express-handlebars": "^3.0.0",
-    "handlebars": "^4.0.11",
+    "eslint": "^4.18.2",
     "jquery": "^3.3.1",
-    "js-cookie": "^2.2.0",
     "markdown": "^0.5.0",
     "moment": "^2.21.0",
     "pg": "^7.4.1",
     "pg-hstore": "^2.3.2",
-    "popper.js": "^1.12.9",
-    "sequelize": "^4.36.0"
+    "popper.js": "^1.12.9"
+  },
+  "autoload": {
+    "App": "./app"
   }
 }

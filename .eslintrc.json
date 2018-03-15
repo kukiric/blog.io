@@ -5,6 +5,9 @@
         "es6": true,
         "node": true
     },
+    "globals": {
+        "use": false
+    },
     "parserOptions": {
         "sourceType": "module",
         "ecmaVersion": 2017
@@ -17,7 +20,11 @@
         "no-unused-vars": "warn",
         "constructor-super": "warn",
         "valid-typeof": "warn",
-        "comma-dangle": "warn",
-        "semi": "warn"
+        "comma-dangle": "error",
+        "semi": "warn",
+        "no-mixed-spaces-and-tabs": "warn",
+        "no-trailing-spaces": "warn",
+        "indent": ["warn", 4],
+        "quotes": ["warn", "double"]
     }
 }

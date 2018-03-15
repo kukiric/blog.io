@@ -8,18 +8,10 @@
             "type": "node",
             "request": "launch",
             "name": "Launch (Dev)",
-            "program": "${workspaceFolder}/server/main.js",
+            "program": "${workspaceFolder}/server.js",
             "env": {
                 "NODE_ENV": "development"
             }
-        },
-        {
-            "name": "Launch in Firefox",
-            "type": "firefox",
-            "request": "launch",
-            "reAttach": true,
-            "url": "http://localhost:8080/",
-            "webRoot": "${workspaceFolder}"
         }
     ]
 }
