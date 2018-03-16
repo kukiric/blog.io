@@ -20,6 +20,8 @@
 <body>
     {{-- Barra de navegação --}}
     @include("partials/navbar")
+    {{-- Mensagens de erro --}}
+    @!each(message in flashMessages, include = "partials/alert")
     {{-- Conteúdo principal --}}
     <div class="container" id="content">
         @!section("content")

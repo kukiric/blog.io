@@ -8,7 +8,7 @@ class UserController {
             await auth.attempt(body.username, body.password);
         }
         catch (error) {
-            session.flash({ login: "failed" });
+            session.flash({ login: `O usuário "${body.username}" não existe ou a senha fornecida é incorreta` });
         }
         return response.redirect("back");
     }
