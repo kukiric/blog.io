@@ -25,26 +25,32 @@
         {{-- Meta-dados --}}
         <div class="d-flex justify-content-between">
             <span class="mb-2">Autor: {{ post.full_name }}</span>
-            <span class="mb-w text-muted">{{ dateTime(post.created_at )}}</span>
+            <span class="mb-w text-muted">{{ utils.dateTime(post.created_at )}}</span>
         </div>
     </div>
     <div class="card-body">
         {{-- Imagem --}}
         <a href="/posts/{{post.id}}">
-            <img class="rounded img-fluid" src="https://picsum.photos/800/200?image={{imageId(post.created_at)}}">
+            <img class="rounded img-fluid" src="https://picsum.photos/800/200?image={{utils.imageId(post.created_at)}}">
         </a>
         <br><br>
         {{-- Conteúdo --}}
-        <div class="post-content editor-off">{{{ markdown(post.content, shortText )}}}</div>
+        @if(shortText)
+        <div class="post-content editor-off">{{{ utils.markdown(utils.shorten(post.content)) }}}</div>
+        @else
+        <div class="post-content editor-off">{{{ utils.markdown(post.content) }}}</div>
+        @endif
         {{-- Área de edição --}}
         @loggedIn
         <textarea class="d-none post-editor editor-on" name="content" rows="16">{{ post.content }}</textarea>
         @endloggedIn
         {{-- Ler mais --}}
-        @if(shortText)
-        <div class="d-flex flex-column justify-content-center">
-            <div class="text-muted h3 text-center">. . . . .</div>
-            <a class="btn btn-primary col-xl-2 col-lg-4 col-md-6 mx-auto" href="/posts/{{post.id}}">Ler mais</a>
+        @if(shortText && utils.isLong(post.content))
+        <div class="editor-off">
+            <div class="d-flex flex-column justify-content-center">
+                <div class="text-muted h3 text-center">. . . . .</div>
+                <a class="btn btn-primary col-xl-2 col-lg-4 col-md-6 mx-auto" href="/posts/{{post.id}}">Ler mais</a>
+            </div>
         </div>
         @endif
     </div>

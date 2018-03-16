@@ -1,33 +1,7 @@
 "use strict";
 
 const Post = use("App/Models/Post");
-const md = use("markdown").markdown;
-const moment = use("moment");
-
-/**
- * @param {string} text Texto a ser formatado
- * @param {boolean} shortText Retorna somente o primeiro parágrafo
- */
-function markdown(text, shortText) {
-    let html = md.toHTML(text);
-    return html;
-}
-
-/**
- * Formata uma data como DD/MM/AAAA
- * @param {*} date Data
- */
-function dateTime(date) {
-    return moment(date).locale("pt-br").format("L");
-}
-
-/**
- * @param {number} timestamp Horário de criação do post para geração do ID
- */
-function imageId(timestamp) {
-    let id = moment(timestamp).unix() % 1047;
-    return id;
-}
+const PostUtils = use("App/Utils/PostUtils");
 
 class PostController {
 
@@ -43,9 +17,7 @@ class PostController {
             isLastPage: posts.isLastPage,
             posts: posts.data,
             shortText: true,
-            markdown,
-            dateTime,
-            imageId
+            utils: PostUtils
         });
     }
 
@@ -68,10 +40,8 @@ class PostController {
             isLastPage: posts.isLastPage,
             postsActive: "active",
             shortText: false,
-            page,
-            markdown,
-            dateTime,
-            imageId
+            utils: PostUtils,
+            page
         });
     }
 
@@ -92,9 +62,7 @@ class PostController {
                 isLastPage: true,
                 postsActive: "active",
                 shortText: false,
-                markdown,
-                dateTime,
-                imageId
+                utils: PostUtils
             });
         }
         catch (error) {
