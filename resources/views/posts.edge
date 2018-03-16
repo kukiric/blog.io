@@ -14,11 +14,12 @@
             @!each(post in posts, include = "partials/post")
             {{--  Botões de paginação  --}}
             @if(homeActive)
-                <a class="text-center page-link w-100" href="/posts?page=2">Ver mais postagens</a>
-                <br>
+            <a class="text-center page-link w-100" href="/posts?page=2">Ver mais postagens</a>
             @elseif(page != null)
-                <a class="btn btn-primary " href="/posts?page={{ page - 1 }}">Página anterior</a>
-                <a class="btn btn-primary {{ isLastPage ? 'disabled' : ''}}" href="/posts?page={{ page + 1 }}">Próxima página</a>
+            <div class="btn-group w-100" role="group">
+                <a class="btn btn-light w-50 {{ page <= 1 ? 'disabled' : '' }}" href="/posts?page={{ page - 1 }}">Página anterior</a>
+                <a class="btn btn-light w-50 {{ isLastPage ? 'disabled' : '' }}" href="/posts?page={{ page + 1 }}">Próxima página</a>
+            </div>
             @endif
         </div>
     </div>

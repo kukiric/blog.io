@@ -30,7 +30,9 @@ function imageId(timestamp) {
 }
 
 class PostController {
-    async home({ request, view }) {
+
+    // Lista apenas os posts mais recentes
+    async home({ view }) {
         // Busca os posts no banco
         let posts = await Post.getRecent(0, 5);
 
@@ -47,6 +49,7 @@ class PostController {
         });
     }
 
+    // Lista uma página do catálogo de posts
     async list({ request, view }) {
         // Força a página a ser um número válido
         let page = parseInt(request.get().page);
@@ -72,13 +75,21 @@ class PostController {
         });
     }
 
+    // Lista um post por ID
     async get({ params, view }) {
         try {
+            // BUG: post.with() e post.user().load() (eager-loading) não geram o join no select, necessitando a busca manual do usuário
             let post = await Post.find(params.id);
+            let user = await post.user().fetch();
+            let postData = post.toJSON();
+            let userData = user.toJSON();
+            postData.full_name = userData.full_name;
+
             return view.render("posts", {
                 header: `Posts - ${post.title}`,
                 pageName: post.title,
-                posts: [post],
+                posts: [postData],
+                isLastPage: true,
                 postsActive: "active",
                 shortText: false,
                 markdown,
@@ -91,16 +102,31 @@ class PostController {
         }
     }
 
-    async post({ request, response }) {
-        return "401";
+    // Envia um novo post
+    async post({ request, auth, response }) {
+        try {
+            let user = await auth.getUser();
+            let body = request.post();
+            await Post.create({
+                title: body.title,
+                content: body.content,
+                user_id: user.id
+            });
+            response.redirect("back");
+        }
+        catch (error) {
+            return error.message;
+        }
     }
 
+    // Atualiza um post existente
     async update({ request, response }) {
-        return "401";
+        response.redirect("back");
     }
 
+    // Remove um post do sistema
     async delete({ request, response }) {
-        return "401";
+        response.redirect("back");
     }
 }
 

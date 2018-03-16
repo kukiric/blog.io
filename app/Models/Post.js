@@ -25,7 +25,7 @@ class Post extends Model {
             query.where("posts.title", "ilike", `%${search}%`);
         }
         query.join("users", "users.id", "posts.user_id");
-        query.orderBy("posts.created_at");
+        query.orderBy("posts.created_at", "desc");
         query.offset(offset).limit(limit);
         let result = await query.fetch();
 
