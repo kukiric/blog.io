@@ -23,6 +23,6 @@ Route.post("/logout", "UserController.logout");
 Route.get("/", "PostController.home");
 Route.get("/posts", "PostController.list");
 Route.get("/posts/:id", "PostController.get");
-Route.post("/posts", "PostController.post");
-Route.post("/posts/:id/update", "PostController.update");
+Route.post("/posts", "PostController.post").validator("PostValidator");
+Route.post("/posts/:id/update", "PostController.update").validator("PostValidator");
 Route.post("/posts/:id/delete", "PostController.delete");
