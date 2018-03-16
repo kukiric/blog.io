@@ -120,13 +120,21 @@ class PostController {
     }
 
     // Atualiza um post existente
-    async update({ request, response }) {
+    async update({ params, request, auth, response }) {
         response.redirect("back");
     }
 
     // Remove um post do sistema
-    async delete({ request, response }) {
-        response.redirect("back");
+    async delete({ params, auth, response }) {
+        try {
+            await auth.check();
+            let post = await Post.find(params.id);
+            await post.delete();
+            response.redirect("back");
+        }
+        catch(error) {
+            return error.message;
+        }
     }
 }
 
