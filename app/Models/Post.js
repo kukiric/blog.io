@@ -10,8 +10,6 @@ class Post extends Model {
      * @param {string} search
      */
     static async getRecent(page, limit, search) {
-        let offset = page * limit;
-
         // Conta o número de páginas
         let pageCount = new Promise(async resolve => {
             let total = await Post.getCount();
@@ -20,17 +18,15 @@ class Post extends Model {
 
         // Monta a query do banco de dados
         let query = this.query();
-        query.select("posts.id", "posts.title", "posts.content", "posts.user_id", "posts.created_at", "users.full_name");
         if (search) {
             query.where("posts.title", "ilike", `%${search}%`);
         }
-        query.join("users", "users.id", "posts.user_id");
         query.orderBy("posts.created_at", "desc");
-        query.offset(offset).limit(limit);
-        let result = await query.fetch();
+        query.forPage(page, limit);
+        let result = await query.with("user").fetch();
 
         return {
-            isLastPage: page + 1 >= await pageCount,
+            isLastPage: page >= await pageCount,
             data: result.toJSON()
         };
     }

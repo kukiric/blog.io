@@ -24,7 +24,7 @@
         </div>
         {{-- Meta-dados --}}
         <div class="d-flex justify-content-between">
-            <span class="mb-2">Autor: {{ post.full_name }}</span>
+            <span class="mb-2">Autor: {{ post.user.full_name }}</span>
             <span class="mb-w text-muted">{{ utils.dateTime(post.created_at )}}</span>
         </div>
     </div>

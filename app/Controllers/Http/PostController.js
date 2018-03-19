@@ -5,10 +5,10 @@ const PostUtils = use("App/Utils/PostUtils");
 
 class PostController {
 
-    // Lista apenas os posts mais recentes
+    // Lista apenas os primeiros 5 posts mais recentes
     async home({ view }) {
         // Busca os posts no banco
-        let posts = await Post.getRecent(0, 5);
+        let posts = await Post.getRecent(1, 5);
 
         return view.render("posts", {
             header: "Posts recentes",
@@ -31,7 +31,7 @@ class PostController {
         let search = request.get().q;
 
         // Busca os posts no banco
-        let posts = await Post.getRecent(page - 1, 5, search);
+        let posts = await Post.getRecent(page, 5, search);
 
         return view.render("posts", {
             header: `Posts - Página ${page}`,
@@ -45,20 +45,19 @@ class PostController {
         });
     }
 
-    // Lista um post por ID
+    // Lista um único post por ID
     async get({ params, view }) {
         try {
-            // BUG: post.with() e post.user().load() (eager-loading) não geram o join no select, necessitando a busca manual do usuário
-            let post = await Post.find(params.id);
-            let user = await post.user().fetch();
-            let postData = post.toJSON();
-            let userData = user.toJSON();
-            postData.full_name = userData.full_name;
+            let post = await Post.query()
+                .where("id", params.id)
+                .with("user")
+                .limit(1)
+                .fetch();
 
             return view.render("posts", {
                 header: `Posts - ${post.title}`,
                 pageName: post.title,
-                posts: [postData],
+                posts: post.toJSON(),
                 isLastPage: true,
                 postsActive: "active",
                 shortText: false,
